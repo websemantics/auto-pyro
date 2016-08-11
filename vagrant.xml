@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#
+#    ____ _  _ ___ ____                      __ __ ____ _________ _
+#     \__\ \  \  \  \  \                         _ _____________ __
+#      \  \ \__\  \  \__\                           __ __ ______/  |
+#       _________  _____     _____ _________          _________|    \_
+#       |         \ \    \   /    / |          \         ____   \_    `-_
+#       |    __    | \    \ /    /  |    __     |       /   \ 4  5.     \
+#       |   |__)   |  \    V    /   |   |__)    |      /    /3     6\    \
+#       |      ___/    \       /    |          <       |   |2    /  7|   |
+#       |     |         |     |     |     |\    \      \    \1  /  8/    /
+#       |     |         |     |     |     | \    \      \    `-.-.-'    /
+#       |_____|         |_____|     |_____|  \____\      '-_        _-'
+#                                                           `- - - '
+#       PyroCMS Deploy Tool v1.0
+#
+#       This vagrant build file is still work in progress.
+#
+#       2011-2016 Web Semantics, Inc.
+#       All Rights Reserved.
+#
+#       @link      http://websemantics.ca
+#       @link      http://ibuild.io
+#       @author    WebSemantics, Inc. <info@websemantics.ca>
+#       @author    Adnan M.Sagar, PhD. <adnan@websemantics.ca>
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+<project name="vagrant" default="install">
+
+	<description>Vagrant tasks.</description>
+
+	<dirname property="vagrantfile.dir" file="${env.VAGRANT.file}" />
+
+	<target name="install" depends="check-vagrant-version,vagrant-plugins">
+	</target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Install vagrant plugins.
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+   	<target name="vagrant-plugins">
+        <for list="${env.VAGRANT.plugins}" param="plugin">
+          <sequential>
+			<vagrant-plugin name="@{plugin}" />
+          </sequential>
+        </for>
+	</target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Check for Vagrant Required Version.
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+	<target name="check-vagrant-version">
+		<exec executable="${env.VAGRANT.bin}"
+			  outputproperty="env.VAGRANT.version.current"
+			  failifexecutionfails="false">
+			<arg line="--version" />
+		</exec>
+
+		<condition property="env.VAGRANT.version.up_to_date">
+			<contains string="${env.VAGRANT.version.current}"
+					  substring="Vagrant ${env.VAGRANT.version}" />
+		</condition>
+
+		<fail unless="env.VAGRANT.version.up_to_date"
+			message="ERROR: Please install Vagrant ${env.VAGRANT.version}. Current version is ${env.VAGRANT.version.current}. Visit https://vagrantup.com link and instructions.${line.separator}"
+		/>
+	</target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Vagrant Up.
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+	<target name="up">
+		<exec executable="${env.VAGRANT.bin}" dir="${vagrantfile.dir}">
+			<arg line="up" />
+		</exec>
+	</target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Vagrant Down.
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+	<target name="down">
+		<exec executable="${env.VAGRANT.bin}" dir="${vagrantfile.dir}">
+			<arg line="down" />
+		</exec>
+	</target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Vagrant Destroy.
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+	<target name="destroy">
+		<exec executable="${env.VAGRANT.bin}" dir="${vagrantfile.dir}">
+			<arg line="destroy" />
+		</exec>
+	</target>
+
+ 	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  M A C R O :  Vagrant plugins install.
+    #
+    #               Macro for installing/uninstall vagrant plugins into your Vagrant.
+    #
+    #
+    #  @param name, the name of the plugin to install
+    #
+    #  @param action,   this param defaults to 'install' and can be set to 'uninstall'
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+	<macrodef name="vagrant-plugin">
+		<attribute name="name" />
+        <attribute name="action"   default="install"/>
+		<sequential>
+			<exec executable="${env.VAGRANT.bin}">
+				<arg line="plugin" />
+				<arg line="@{action}" />
+				<arg line="@{name}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+</project>

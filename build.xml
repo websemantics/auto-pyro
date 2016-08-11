@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#
+#    ____ _  _ ___ ____                      __ __ ____ _________ _
+#     \__\ \  \  \  \  \                         _ _____________ __
+#      \  \ \__\  \  \__\                           __ __ ______/  |
+#       _________  _____     _____ _________          _________|    \_
+#       |         \ \    \   /    / |          \         ____   \_    `-_
+#       |    __    | \    \ /    /  |    __     |       /   \ 4  5.     \
+#       |   |__)   |  \    V    /   |   |__)    |      /    /3     6\    \
+#       |      ___/    \       /    |          <       |   |2    /  7|   |
+#       |     |         |     |     |     |\    \      \    \1  /  8/    /
+#       |     |         |     |     |     | \    \      \    `-.-.-'    /
+#       |_____|         |_____|     |_____|  \____\      '-_        _-'
+#                                                           `- - - '
+#       PyroCMS Deploy Tool v1.0
+#
+#
+#       This build file is desgined to automate the installation process
+#       of PyroCMS 3 apps, their addons, underlying framework (i.e. Laravel,
+#       PyroCMS etc) and perform various tasks such as, installing front-end,
+#       npm, composer dependancies as well as providing development tools,
+#       for example, reinstall / uninstall addons among other things.
+#
+#       Type 'ant' or 'ant -projecthelp' to get a list of
+#       available targets
+#
+#       2011-2016 Web Semantics, Inc.
+#       All Rights Reserved.
+#
+#       @link      http://websemantics.ca
+#       @link      http://ibuild.io
+#       @author    WebSemantics, Inc. <info@websemantics.ca>
+#       @author    Adnan M.Sagar, PhD. <adnan@websemantics.ca>
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+<project default="default" basedir="." name="Deploy a PyroCMS project">
+
+    <description>Automate the installation of the current project</description>
+    <dirname property="project.dir" file="${ant.file}"/>
+    <include file="${project.dir}/vagrant.xml" as="vagrant"/>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Installs this project and runs post install tasks
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="install" depends="require-install-addons" description="Installs this project and runs post install tasks">
+
+        <echo message="Post-install actions ..."/>
+
+        <!-- Example 1 : Install bower dependencies
+
+        <exec dir="${app.dir}/public/js" executable="${env.BOWER.bin}">
+            <arg line="install --force-latest"/>
+        </exec> -->
+
+        <!-- Example 2 : Install Node.js Less package
+
+        <exec dir="${app.dir}" executable="${env.NPM.bin}">
+            <arg line=" i less"/>
+        </exec>  -->
+
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Requires and installs project addons and all the
+    #                front-end, css, npm, grunt libraries
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="require-install-addons" depends="install-pyro" description="Requires and installs project addons and all the front-end, css, npm, grunt libraries">
+
+        <echo message="Requiring and installing project addons ..."/>
+
+        <for list="${env.APP_ADDONS}" param="package">
+            <sequential>
+                <addon package="@{package}"/>
+            </sequential>
+        </for>
+
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Installs PyroCMS by running migrations, installing/seeding
+    #                core modules/addons and creating the project .env file
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="install-pyro" depends="require-composer" description="Installs PyroCMS by running migrations, installing/seeding core modules/addons and creating the project .env file">
+
+        <echo message="Starting PyroCMS installation ... "/>
+
+        <touch file="${env.file}"/>
+
+        <echo message="- Creating project .env file ..."/>
+
+        <echo message="APP_ENV=${env.APP_ENV}&#10;" append="false" file="${env.file}"/>
+        <echo message="APP_DEBUG=${env.APP_DEBUG}&#10;" append="true" file="${env.file}"/>
+        <echo message="INSTALLED=false&#10;" append="true" file="${env.file}"/>
+        <echo message="APP_KEY=${env.APP_KEY}&#10;" append="true" file="${env.file}"/>
+        <echo message="ADMIN_THEME=${env.ADMIN_THEME}&#10;" append="true" file="${env.file}"/>
+        <echo message="STANDARD_THEME=${env.STANDARD_THEME}&#10;" append="true" file="${env.file}"/>
+        <echo message="DB_DRIVER=${env.DB_DRIVER}&#10;" append="true" file="${env.file}"/>
+        <echo message="DB_HOST=${env.DB_HOST}&#10;" append="true" file="${env.file}"/>
+        <echo message="DB_DATABASE=${env.DB_DATABASE}&#10;" append="true" file="${env.file}"/>
+        <echo message="DB_USERNAME=${env.DB_USERNAME}&#10;" append="true" file="${env.file}"/>
+        <echo message="DB_PASSWORD=${env.DB_PASSWORD}&#10;" append="true" file="${env.file}"/>
+        <echo message="APP_URL=${env.APP_URL}&#10;" append="true" file="${env.file}"/>
+        <echo message="APPLICATION_NAME=${env.APPLICATION_NAME}&#10;" append="true" file="${env.file}"/>
+        <echo message="APPLICATION_REFERENCE=${env.APPLICATION_REFERENCE}&#10;" append="true" file="${env.file}"/>
+        <echo message="APPLICATION_DOMAIN=${env.APPLICATION_DOMAIN}&#10;" append="true" file="${env.file}"/>
+        <echo message="ADMIN_USERNAME=${env.ADMIN_USERNAME}&#10;" append="true" file="${env.file}"/>
+        <echo message="ADMIN_EMAIL=${env.ADMIN_EMAIL}&#10;" append="true" file="${env.file}"/>
+        <echo message="ADMIN_PASSWORD=${env.ADMIN_PASSWORD}&#10;" append="true" file="${env.file}"/>
+        <echo message="DEFAULT_LOCALE=${env.DEFAULT_LOCALE}&#10;" append="true" file="${env.file}"/>
+        <echo message="APP_TIMEZONE=${env.APP_TIMEZONE}&#10;" append="true" file="${env.file}"/>
+
+        <echo message="- Generating a fresh application key ..."/>
+
+        <exec dir="${app.dir}" executable="${env.PHP.bin}">
+            <arg line="artisan key:generate"/>
+        </exec>
+
+        <echo message="- Running core migrations ..."/>
+
+        <exec dir="${app.dir}" executable="${env.PHP.bin}">
+            <arg line="artisan migrate --force --no-addons --path vendor/anomaly/streams-platform/migrations/core"/>
+        </exec>
+
+        <echo message="- Running application migrations ..."/>
+
+        <exec dir="${app.dir}" executable="${env.PHP.bin}">
+            <arg line="artisan migrate --force --no-addons --path vendor/anomaly/streams-platform/migrations/application"/>
+        </exec>
+
+        <echo message="- Running other migrations ..."/>
+
+        <exec dir="${app.dir}" executable="${env.PHP.bin}">
+            <arg line="artisan migrate --force --no-addons"/>
+        </exec>
+
+        <echo message="- Installing core modules (and, remove excluded) ..."/>
+
+        <for list="${env.CORE_MODULES}" param="module">
+            <sequential>
+              <if>
+                <contains string="${env.MODULE_EXCLUDES}" substring="@{module}"/>
+                <then><!-- DELETE MODULE EXCLUDES?
+                  <echo message="- deleting 'core/anomaly/@{module}-module' ..."/>
+                  <delete dir="${app.dir}/core/anomaly/@{module}-module" failonerror="${failonerror}"/> -->
+                </then>
+                <else>
+                  <exec dir="${app.dir}" executable="${env.PHP.bin}">
+                      <arg line="artisan module:install anomaly.module.@{module}"/>
+                  </exec>
+                </else>
+              </if>
+            </sequential>
+        </for>
+
+        <echo message="- Installing core extensions (and, remove excluded) ..."/>
+
+        <for list="${env.CORE_EXTENSIONS}" param="extension">
+            <sequential>
+              <if>
+                <contains string="${env.EXTENSION_EXCLUDES}" substring="@{extension}"/>
+                <then><!-- DELETE EXTENSION EXCLUDES
+                  <echo message="- deleting 'core/anomaly/@{extension}-extension' ..."/>
+                  <delete dir="${app.dir}/core/anomaly/@{extension}-extension" failonerror="${failonerror}"/> -->
+                </then>
+                <else>
+                  <exec dir="${app.dir}" executable="${env.PHP.bin}">
+                    <arg line="artisan extension:install anomaly.extension.@{extension}"/>
+                  </exec>
+                </else>
+              </if>
+            </sequential>
+        </for>
+
+        <!-- Set INSTALLED = true in .env file so we can seed -->
+        <replace file="${env.file}" token="INSTALLED=false" value="INSTALLED=true"/>
+
+        <echo message="- Seeding core modules ..."/>
+
+        <for list="${env.CORE_MODULES}" param="module">
+            <sequential>
+                <if>
+                  <or>
+                    <contains string="${env.SEED_EXCLUDES}" substring="@{module}"/>
+                    <contains string="${env.MODULE_EXCLUDES}" substring="@{module}"/>
+                  </or>
+                  <else>
+                      <exec dir="${app.dir}" executable="${env.PHP.bin}">
+                          <arg line="artisan db:seed --force --addon anomaly.module.@{module}"/>
+                      </exec>
+                  </else>
+                </if>
+            </sequential>
+        </for>
+
+        <echo message="- Seeding core extensions ..."/>
+
+        <for list="${env.CORE_EXTENSIONS}" param="extension">
+            <sequential>
+                <if>
+                  <or>
+                    <contains string="${env.SEED_EXCLUDES}" substring="@{extension}"/>
+                    <contains string="${env.EXTENSION_EXCLUDES}" substring="@{extension}"/>
+                  </or>
+                  <else>
+                      <exec dir="${app.dir}" executable="${env.PHP.bin}">
+                          <arg line="artisan db:seed --force --addon anomaly.extension.@{extension}"/>
+                      </exec>
+                  </else>
+                </if>
+            </sequential>
+        </for>
+
+        <echo message="- Deleting the Installer module and all execluded addons ..."/>
+
+        <delete dir="${installer.dir}" failonerror="${failonerror}"/>
+
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Requires all composer dependencies
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="require-composer" depends="require-pyro" description="Requires all composer dependencies">
+
+        <echo message="Run composer ..."/>
+
+        <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+            <arg line="install"/>
+        </exec>
+
+        <for list="${env.COMPOSER.require}" param="package">
+            <sequential>
+                <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+                    <arg line="require @{package}"/>
+                </exec>
+            </sequential>
+        </for>
+
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Clones PyroCMS and copy its files to project folder
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="require-pyro" depends="clean" description="Clones PyroCMS and copy its files to project folder">
+
+        <echo message="Clone a fresh copy of pyrocms ... "/>
+
+        <exec dir="${app.dir}" executable="${env.GIT.bin}">
+            <arg line="clone"/>
+            <arg line="https://github.com/pyrocms/pyrocms"/>
+            <arg line="${pyro.dir}"/>
+        </exec>
+
+        <echo message="Move PyroCMS files into the project folder ..."/>
+
+        <!-- move root folders -->
+        <for list="${env.PYRO_FOLDERS}" param="folder">
+            <sequential>
+                <move file="${pyro.dir}/@{folder}" todir="${app.dir}" includeEmptyDirs="yes" failonerror="${failonerror}" quiet="${quiet}"/>
+            </sequential>
+        </for>
+
+        <!-- move public folder -->
+        <for list="${env.PUBLIC_FOLDERS}" param="folder">
+            <sequential>
+                <move file="${pyro.dir}/public/@{folder}" todir="${app.dir}/public" includeEmptyDirs="yes" failonerror="${failonerror}" quiet="${quiet}"/>
+            </sequential>
+        </for>
+
+        <!-- move files from root folder -->
+        <move todir="${app.dir}">
+            <filelist dir="${pyro.dir}">
+                <file name="artisan"/>
+                <file name="server.php"/>
+                <file name="composer.json"/>
+            </filelist>
+        </move>
+
+        <!-- move files from public folder -->
+        <move todir="${app.dir}/public">
+            <fileset dir="${pyro.dir}/public">
+                <include name="**/*.*"/>
+            </fileset>
+        </move>
+
+        <echo message="Remove PyroCMS temporary folder ..."/>
+
+        <delete dir="${pyro.dir}" failonerror="${failonerror}"/>
+
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Delete temp folders and the project .env file
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="clean" depends="init" description="Delete temp folders and the project .env file">
+
+        <delete file="${env.file}" failonerror="${failonerror}"/>
+        <delete dir="${pyro.dir}" failonerror="${failonerror}"/>
+        <delete dir="${laravel.dir}" failonerror="${failonerror}"/>
+
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Loads project properties, task definitions and other
+    #                environment settings
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="init" description="Loads project properties, task definitions and other environment settings">
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        #  L O A D   P R O P E R T I E S
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <property environment="env"/>
+        <property file="local.properties"/>
+        <property name="app.dir" value="${user.dir}"/>
+        <property name="pyro.dir" value="${app.dir}/pyro"/>
+        <property name="installer.dir" value="${app.dir}/core/anomaly/installer-module"/>
+        <property name="laravel.dir" value="${app.dir}/laravel"/>
+        <property name="env.file" value="${app.dir}/.env"/>
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        #  R E S O L V E   D E P E N D E N C I E S
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Download Ant dependencies -->
+        <mkdir dir="${app.dir}/lib" />
+        <get src="http://www.java2s.com/Code/JarDownload/ant-contrib/ant-contrib-1.0b3.jar.zip" dest="${app.dir}/lib/ant-contrib-1.0b3.jar.zip" usetimestamp="true" skipexisting="true" ignoreerrors="${ignoreerrors}" quiet="${quiet}"/>
+        <unzip src="${app.dir}/lib/ant-contrib-1.0b3.jar.zip" dest="${app.dir}/lib"/>
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        #  T A S K   D E F I N I T I O N S
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${app.dir}/lib/ant-contrib-1.0b3.jar"/>
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        #  D E B U G  P R O P E R T I E S
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <property name="debug" value="${env.DEBUG}"/>
+
+        <if>
+            <equals arg1="${debug}" arg2="true"/>
+            <then>
+                <property name="ignoreerrors" value="false"/>
+                <property name="failonerror" value="true"/>
+                <property name="quiet" value="false"/>
+            </then>
+            <else>
+                <property name="ignoreerrors" value="true"/>
+                <property name="failonerror" value="false"/>
+                <property name="quiet" value="true"/>
+            </else>
+        </if>
+
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  D E F A U L T   T A R G E T : The default target to start project install
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="default" depends="install" description="The default target to start project install"/>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Install project addons (development helper task).
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="install-addons" depends="init" description="Install project addons">
+        <!-- Example to install an extension
+        <exec dir="${app.dir}" executable="${env.PHP.bin}">
+            <arg line="artisan extension:install vendor.extension.name"/>
+        </exec>
+        -->
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Uninstall project addons (development helper task).
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="uninstall-addons" depends="init" description="Uninstall project addons">
+      <!-- Example to uninstall an extension
+        <exec dir="${app.dir}" executable="${env.PHP.bin}">
+            <arg line="artisan extension:uninstall vendor.extension.name"/>
+        </exec>
+      -->
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Reinstall project addons (development helper task).
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="reinstall-addons" depends="init" description="Reinstall project addons">
+        <antcall target="uninstall-addons"/>
+        <antcall target="install-addons"/>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  M A C R O :  Require - Install / Uninstall or Reinstall an
+    #               addon (Module, Extension, Field Type etc) and optional
+    #               seeding, run composer, bower, npm and grunt if at all.
+    #
+    #               This marcro will also accept plugin, theme, field-type
+    #               addons but will only install Module and Extension types.
+    #
+    #  @param package,  the addon name and optional url (joined by a pipe '|'),
+    #                   for example,  websemantics.extension.entity_builder or
+    #                   websemantics.extension.entity_builder|url (github etc)
+    #                   It gets split into 'vendor', 'type', 'name' and optional url
+    #
+    #  @param action,   this param defaults to 'install' (reinstall or
+    #                   uninstall). Once all is done, the macro will install,
+    #                   uninstall or reinstall an addone based on its value
+    #
+    #  @param url,      if provided, attempt to clone the addon
+    #                   (remove if exists already)
+    #
+    #  @param location, where to save in the 'addons' folder (default or shared),
+    #                   it defaults to 'default'
+    #
+    #  @param seed,     If set to 'true' (default) the addon is seeded after install.
+    #
+    #  @param composer, If set to 'true' (default) then install
+    #                   all composer packages against the addon
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <macrodef name="addon">
+        <attribute name="package"/>
+        <attribute name="action" default="install"/>
+        <attribute name="location" default="default"/>
+        <attribute name="seed" default="true"/>
+        <attribute name="composer" default="true"/>
+        <sequential>
+
+            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            #  G E T  V E N D O R   T Y P E   S L U G
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+            <script language="javascript">
+                var name_url = "@{package}";
+                <![CDATA[
+                        // Get the package full name (namespace) and optional url,
+                        var arr = name_url.split('|');
+                        var name = arr[0];
+                        var url = arr[1]
+                            ? arr[1]
+                            : 'null';
+
+                        // Get the package vendor, type and slug
+                        arr = name.split('.');
+                        project.setProperty('vendor', arr[0]);
+                        project.setProperty('type', arr[1]);
+                        project.setProperty('slug', arr[2]);
+                        project.setProperty('url', url);
+                        project.setProperty('name', name);
+
+                ]]>
+            </script>
+
+            <var name="addon.dir" value="${app.dir}/addons/@{location}/${vendor}/${slug}-${type}"/>
+
+            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            #  C L O N E   A D D O N   R E P O S I T O R Y
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+            <if>
+                <equals arg1="${url}" arg2="null"/>
+                <else>
+                    <!-- Make sure to remove the addon if already there -->
+                    <delete dir="${addon.dir}" failonerror="${failonerror}"/>
+
+                    <echo message="cloning ${type} ${slug} (${name}) ..."/>
+
+                    <exec dir="${app.dir}" executable="${env.GIT.bin}">
+                        <arg line="clone"/>
+                        <arg line="${url}"/>
+                        <arg line="${addon.dir}"/>
+                    </exec>
+                </else>
+            </if>
+
+            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            #  R U N   C O M P O S E R
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+            <if>
+                <and>
+                    <available file="${addon.dir}/composer.json"/>
+                    <equals arg1="@{composer}" arg2="true"/>
+                </and>
+                <then>
+                    <exec dir="${addon.dir}" executable="${env.COMPOSER.bin}">
+                        <arg line="install"/>
+                    </exec>
+                </then>
+            </if>
+
+            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            #  R U N   N P M
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+            <if>
+                <available file="${addon.dir}/package.json"/>
+                <then>
+                    <exec dir="${addon.dir}" executable="${env.NPM.bin}">
+                        <arg line=" i"/>
+                    </exec>
+                </then>
+            </if>
+
+            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            #  R U N   B O W E R
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+            <if>
+                <available file="${addon.dir}/bower.json"/>
+                <then>
+                    <exec dir="${addon.dir}" executable="${env.BOWER.bin}">
+                        <arg line="install --force-latest"/>
+                    </exec>
+                </then>
+            </if>
+
+            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            #  R U N   G R U N T
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+            <if>
+                <available file="${addon.dir}/gruntfile.js"/>
+                <then>
+                    <exec dir="${addon.dir}" executable="${env.GRUNT.bin}">
+                        <arg line="--force"/>
+                    </exec>
+                </then>
+            </if>
+
+            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            #  I N S T A L L
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+            <if>
+                <or>
+                    <equals arg1="${type}" arg2="module"/>
+                    <equals arg1="${type}" arg2="extension"/>
+                </or>
+                <then>
+                    <echo message="@{action}ing ${type} ${slug} (${name}) ..."/>
+
+                    <exec dir="${app.dir}" executable="${env.PHP.bin}">
+                        <arg line="artisan ${type}:@{action} ${name}"/>
+                    </exec>
+                </then>
+            </if>
+
+            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            #  S E E D
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+            <if>
+                <or>
+                    <equals arg1="${type}" arg2="module"/>
+                    <equals arg1="${type}" arg2="extension"/>
+                </or>
+                <then>
+                    <if>
+                        <equals arg1="@{seed}" arg2="true"/>
+                        <then>
+                            <exec dir="${app.dir}" executable="${env.PHP.bin}">
+                                <arg line="artisan db:seed --force --addon ${name}"/>
+                            </exec>
+                        </then>
+                    </if>
+                </then>
+            </if>
+
+        </sequential>
+    </macrodef>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+   #
+   #
+   #
+   # E X P E R I M E N T A L  T A R G E T : Install PyroCMS on top of Laravel
+   #
+   #
+   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="install-laravel" depends="require-laravel" description="Install PyroCMS on top of Laravel">
+      <!-- more to come -->
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  E X P E R I M E N T A L  T A R G E T : Clones Laravel and copy all files to project folder
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="require-laravel" depends="clean" description="Clones Laravel and copy all files to project folder.">
+
+        <echo message="Clone a fresh copy of laravel ... "/>
+
+        <exec dir="${app.dir}" executable="${env.GIT.bin}">
+            <arg line="clone"/>
+            <arg line="https://github.com/laravel/laravel"/>
+            <arg line="${laravel.dir}"/>
+        </exec>
+
+        <echo message="Move laravel folders/files into project folder ..."/>
+
+        <for list="app,storage,bootstrap,database,config,tests,resources" param="folder">
+            <sequential>
+                <move file="${laravel.dir}/@{folder}" todir="${app.dir}" includeEmptyDirs="yes" failonerror="${failonerror}" quiet="${quiet}"/>
+            </sequential>
+        </for>
+
+        <move todir="${app.dir}" failonerror="${failonerror}" quiet="${quiet}">
+            <filelist dir="${laravel.dir}">
+                <file name="artisan"/>
+                <file name="server.php"/>
+                <file name="composer.json"/>
+            </filelist>
+        </move>
+
+        <move file="${laravel.dir}/public/assets" todir="${app.dir}/public" includeEmptyDirs="yes" failonerror="${failonerror}" quiet="${quiet}"/>
+        <move file="${laravel.dir}/public/packages" todir="${app.dir}/public" includeEmptyDirs="yes" failonerror="${failonerror}" quiet="${quiet}"/>
+
+        <move todir="${app.dir}/public" failonerror="${failonerror}" quiet="${quiet}">
+            <fileset dir="${laravel.dir}/public">
+                <include name="**/*.*"/>
+            </fileset>
+        </move>
+
+        <echo message="Remove laravel folder ..."/>
+
+        <delete dir="${laravel.dir}" failonerror="${failonerror}"/>
+
+    </target>
+
+</project>
