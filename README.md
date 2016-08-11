@@ -59,9 +59,22 @@ cd auto-app
 ant
 ```
 
-This will launch the deploy process, set back until it is complete. This will result in an installed copy of PyroCMS. More examples will follow.
+This will launch the deploy process, set back until it is complete. The end result will be a fresh working copy PyroCMS.
 
-6- Open your browser at [`APP_URL`](#environment-variables)
+## How To use
+
+To start using Auto-Pyro for your own projects, here's how,
+
+1- [Fork](https://github.com/websemantics/auto-pyro#fork-destination-box) or clone this repository and rename it to your own project
+
+```bash
+git clone https://github.com/websemantics/auto-pyro myapp
+```
+
+2- Add your project `README.md`, `CONTRIBUTING.md` and `LICENSE.md` etc files.
+
+3- Create a module
+
 
 ## Features
 
