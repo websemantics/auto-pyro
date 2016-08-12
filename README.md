@@ -93,7 +93,7 @@ Quick list of the features and benefits of using Auto-Pyro,
 - [x] Automate database migration and seeding
 - [x] Install front-end, node, composer and other dependencies for your projects
 - [x] Speed your Admin development with the [Entity Builder](https://github.com/websemantics/entity_builder-extension) (included)
-- [x] Painless removal of the Installer Module after installation is complete
+- [x] Painless removal of the Installer Module and other excluded addons after installation is complete
 - [ ] Install the Streams platform and PyroCMS core modules directly on Laravel (experimental)
 - [ ] Optionally, setup a [Vagrant](https://www.vagrantup.com/) environment
 
