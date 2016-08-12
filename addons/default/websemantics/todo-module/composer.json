@@ -1,0 +1,9 @@
+{
+    "name": "websemantics/todo-module",
+    "type": "streams-addon",
+    "autoload": {
+        "psr-4": {
+            "Websemantics\\TodoModule\\": "src/"
+        }
+    }
+}
