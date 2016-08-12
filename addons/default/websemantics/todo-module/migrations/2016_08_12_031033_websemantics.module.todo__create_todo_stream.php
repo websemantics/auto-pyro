@@ -11,7 +11,7 @@ class WebsemanticsModuleTodoCreateTodoStream extends Migration
      * @var array
      */
     protected $stream = [
-        'slug' => 'todo'
+        'slug' => 'todo',
         'title_column' => 'name',
         'locked' => true,
     ];
