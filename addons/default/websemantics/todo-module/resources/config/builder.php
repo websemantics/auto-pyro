@@ -135,5 +135,5 @@ return [
  * 2011-2016 Web Semantics, Inc.
  *
  * @link      http://websemantics.ca
- * @author    WebSemantics, Inc. <info@websemantics.ca>
+ * @author    WebSemantics, Inc. <info@websemantics.ca>'
 ];
