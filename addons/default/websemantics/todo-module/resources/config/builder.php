@@ -94,7 +94,7 @@ return [
 	|
 	*/
 
-	'extends_repository' => null,
+  'extends_repository' => null,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -130,10 +130,9 @@ return [
 	|
 	*/
 
+
 	'docblock' =>
-' *
- * 2011-2016 Web Semantics, Inc.
- *
- * @link      http://websemantics.ca
- * @author    WebSemantics, Inc. <info@websemantics.ca>'
+' * @link      http://websemantics.ca
+ * @author    WebSemantics, Inc. <info@websemantics.ca>
+ * @author    Adnan Sagar <msagar@websemantics.ca>'
 ];
