@@ -18,7 +18,6 @@ class TodoModule extends Module
      * @var array
      */
     protected $sections = [
-        'example'
     ];
 
 }
