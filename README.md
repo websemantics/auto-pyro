@@ -80,6 +80,7 @@ git clone https://github.com/websemantics/auto-pyro myapp
 php artisan make:addon websemantics.module.todo
 ```
 
+This will create a module at `addons/default/websemantics/todo-module`
 
 ## Features
 
