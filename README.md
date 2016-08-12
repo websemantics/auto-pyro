@@ -42,7 +42,7 @@ Ok, let's take Auto-Pyro for a ride before we dive into the details,
 
 1- Install the build tool [Apache Ant](http://ant.apache.org/)
 
-2- Clone this repository
+2- Clone this repository into `auto-app`
 
 ```bash
 git clone https://github.com/websemantics/auto-pyro auto-app
