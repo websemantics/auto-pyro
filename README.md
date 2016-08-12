@@ -50,7 +50,7 @@ git clone https://github.com/websemantics/auto-pyro auto-app
 
 3- Configure the deploy properties from `./local.properties` (see [Environment Variables](#environment-variables) for more details)
 
-4- Create a database named, [`DB_USERNAME`](#environment-variables)
+4- Create a database named `pyro` or see [DB_USERNAME](#environment-variables)
 
 5- Deploy the project by executing `Ant` in the project folder,
 
