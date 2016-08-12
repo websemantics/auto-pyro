@@ -66,7 +66,7 @@ Set back until the deploy process is complete. The end result will be a fresh wo
 
 To start using Auto-Pyro for your own projects, here's how,
 
-1- [Fork](https://github.com/websemantics/auto-pyro#fork-destination-box) or clone this repository and rename it to your own project
+1- [Fork](https://github.com/websemantics/auto-pyro#fork-destination-box) or clone this repository and rename it to your own project, `myapp`
 
 ```bash
 git clone https://github.com/websemantics/auto-pyro myapp
@@ -75,6 +75,10 @@ git clone https://github.com/websemantics/auto-pyro myapp
 2- Add your project `README.md`, `CONTRIBUTING.md` and `LICENSE.md` etc files.
 
 3- Create a module
+
+```bash
+To be contrinuted
+```
 
 
 ## Features
@@ -176,7 +180,7 @@ The remaining tasks are experiential and still work in progress,
 | `require-laravel` | Clones Laravel and copy all files to project folder |`init`,`clean` |
 
 
-## Contribute
+## Vontribution
 
 We are more than happy to accept external contributions to the project in the form of feedback, bug reports and even better - pull requests :)
 
