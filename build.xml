@@ -53,7 +53,7 @@
         <!-- Example 1 : Install bower dependencies
 
         <exec dir="${app.dir}/public/js" executable="${env.BOWER.bin}">
-            <arg line="install --force-latest"/>
+            <arg line="install - -force-latest"/>
         </exec> -->
 
         <!-- Example 2 : Install Node.js Less package

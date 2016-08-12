@@ -19,11 +19,11 @@
 
 ## Why
 
+- We don't always need to install, migrate or seed all PyroCMS core addons. For example, not seeding the `Pages` module will allow us to use the project [Twig](http://twig.sensiolabs.org/) views instead.
+
 - When building an app or a website with PyroCMS most of the project code commonly located in the well-recognized `./addons` folder. However, we often end-up tracking [app boilerplate](https://laravel.com/docs/5.2/lifecycle) code from [Laravel](https://laravel.com/) and PyroCMS core modules (located at `./core`) plus many other files in the project Github repository.
 
 - To gain the ability to have project own `README.md`, `CONTRIBUTING.md` and `LICENSE.md` files instead of the framework defaults.
-
-- We don't always need to install, migrate or seed all PyroCMS core addons. For example, not seeding the `Pages` module will allow us to use the project [Twig](http://twig.sensiolabs.org/) views instead.
 
 - Oftentimes we need to install third-party modules, themes and other addons from Github but end-up installing them manually and track them in the project Github repository (Addon package manger?).  
 
@@ -52,14 +52,15 @@ git clone https://github.com/websemantics/auto-pyro auto-app
 
 4- Create a database named, [`DB_USERNAME`](#environment-variables)
 
-5- Deploy the project
+5- Deploy the project by executing `Ant` in the project folder,
 
 ```bash
 cd auto-app
 ant
 ```
 
-This will launch the deploy process, set back until it is complete. The end result will be a fresh working copy PyroCMS.
+Set back until the deploy process is complete. The end result will be a fresh working copy of PyroCMS.
+
 
 ## How To use
 
