@@ -2,9 +2,15 @@
 
 use Anomaly\Streams\Platform\Addon\Module\Module;
 
+/**
+ * Class TodoModule
+ *
+ *
+ * @package   Websemantics\TodoModule
+ */
+
 class TodoModule extends Module
 {
-
     /**
      * The navigation icon.
      *
@@ -19,5 +25,4 @@ class TodoModule extends Module
      */
     protected $sections = [
     ];
-
 }

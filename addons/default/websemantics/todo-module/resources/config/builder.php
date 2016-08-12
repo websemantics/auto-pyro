@@ -1,18 +1,18 @@
 <?php
 
 return [
-
-  /*
-  |   Entity
-  |    ____        _ _     _
-  |   | __ ) _   _(_) | __| | ___ _ __
-  |   |  _ \| | | | | |/ _` |/ _ \ '__|
-  |   | |_) | |_| | | | (_| |  __/ |
-  |   |____/ \__,_|_|_|\__,_|\___|_|  Extension . . .
-  |
-  |   This file contains all the entity builder configs
-  |
-  */
+    
+    /*
+    |   Entity
+    |    ____        _ _     _           
+    |   | __ ) _   _(_) | __| | ___ _ __ 
+    |   |  _ \| | | | | |/ _` |/ _ \ '__|
+    |   | |_) | |_| | | | (_| |  __/ |   
+    |   |____/ \__,_|_|_|\__,_|\___|_|  Extension . . . 
+    |                                
+    |   This file contains all the entity builder configs
+    |
+    */
 
 	/*
 	|--------------------------------------------------------------------------
@@ -20,18 +20,18 @@ return [
 	|--------------------------------------------------------------------------
 	| A list of all the Stream Namespaces used in this Module.
 	|
-	| More control over code generated can be established per assignment,
-	| for example, hide / show table columns and form fields per stream assignment,
+	| More control over code generated can be established per assignment, 
+	| for example, hide / show table columns and form fields per stream assignment, 
 	| also table column field view / template.
 	|
-	| for example:
+	| for example: 
 	|
 	|	'namespaces' => [
 	|		'namespace' => [
 	|			'field_slug' => [
 	|				'hide_column' => true,  *optional, (false by default)
 	|				'hide_field'  => false,  *optional, (false by default)
-	|				'column_template'    =>
+	|				'column_template'    => 
 	|     '<span class="label label-default">{value}</span> *optional, ('{value}' by default)
 	|			]
 	|		]
@@ -43,14 +43,20 @@ return [
 	|  			'column_template'    =>  'default'
 	| You can also have your own markup, for that there's two variables {class} & {value}
 	| For example, '<span class="label label-{class}">{value}</span>'
-	|
+	| 
 	|	*/
 
 	'namespaces' => [
 		'todo' => [
+			// 'field_slug_1' => [
+			// 	'column_template'    => '<span class="label label-info">{value}</span>'
+			// ],
+			// 'field_slug_2' => [
+			// 	'hide_column'        => true
+			// ]
 		]
 	],
-
+	
 	/*
 	|--------------------------------------------------------------------------
 	| Seeding
@@ -59,11 +65,11 @@ return [
 	|
 	| (1) The Entity Builder : 'builder'   (*default)
 	| (2) An internal seeder command : 'self'
-	| (3) Disable seeding : 'no'
+	| (3) Disable seeding : 'no' 
 	|
 	*/
 
-	'seeding' => 'no',
+	'seeding' => 'builder',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -94,18 +100,18 @@ return [
 	|
 	*/
 
-  'extends_repository' => null,
+	'extends_repository' => null,
 
 	/*
 	|--------------------------------------------------------------------------
 	| Avoid Overwrite
 	|--------------------------------------------------------------------------
 	|
-	| For development and to avoid overwriting on code added, list all the files
-	| that should not be overwritten by the builder. Use the last part of the
+	| For development and to avoid overwriting on code added, list all the files 
+	| that should not be overwritten by the builder. Use the last part of the 
 	| file name, ..
-	|
-	| for example:
+	| 
+	| for example: 
 	|   -PostModel.php 		  -> 'Model.php'
 	|   -FileTableColumns.php -> 'TableColumns.php'
 	|
@@ -117,9 +123,9 @@ return [
 	'avoid_overwrite' => [
 		'Model.php',
 		'Repository.php',
-		 // 'TableColumns.php', /* uncomment this if you no longer want this to be overwritten */
-	   // 'FormBuilder.php'
-		 // 'ModuleSeeder.php'
+		// 'TableColumns.php', /* uncomment this if you no longer want this to be overwritten */
+	    // 'FormBuilder.php'
+		// 'ModuleSeeder.php'
 	],
 
 	/*
@@ -130,9 +136,9 @@ return [
 	|
 	*/
 
-
 	'docblock' =>
-' * @link      http://websemantics.ca
+' * @link      http://websemantics.ca/ibuild
+ * @link      http://ibuild.io
  * @author    WebSemantics, Inc. <info@websemantics.ca>
  * @author    Adnan Sagar <msagar@websemantics.ca>'
 ];

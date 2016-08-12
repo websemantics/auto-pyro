@@ -2,20 +2,26 @@
 
 use Anomaly\Streams\Platform\Addon\AddonServiceProvider;
 
+/**
+ * Class TodoModuleServiceProvider
+ *
+ *
+ * @package   Websemantics\TodoModule
+ */
+
 class TodoModuleServiceProvider extends AddonServiceProvider
 {
-
     protected $plugins = [];
 
     protected $routes = [];
 
+    protected $bindings = [];
+
     protected $middleware = [];
 
-    protected $listeners = [];
-
-    protected $aliases = [];
-
-    protected $bindings = [];
+    protected $listeners = [
+    'Anomaly\Streams\Platform\Addon\Module\Event\ModuleWasInstalled' => 
+    ['Websemantics\TodoModule\Listener\BootstrapHandler']];
 
     protected $providers = [];
 
@@ -24,6 +30,8 @@ class TodoModuleServiceProvider extends AddonServiceProvider
     protected $overrides = [];
 
     protected $mobile = [];
+    
+    protected $commands = [];
 
     public function register()
     {
@@ -32,5 +40,6 @@ class TodoModuleServiceProvider extends AddonServiceProvider
     public function map()
     {
     }
-
 }
+
+

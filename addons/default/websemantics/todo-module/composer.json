@@ -5,5 +5,7 @@
         "psr-4": {
             "Websemantics\\TodoModule\\": "src/"
         }
+    },
+    "require": {
     }
 }

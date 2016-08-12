@@ -3,5 +3,5 @@
 return [
     'title'       => 'Todo',
     'name'        => 'Todo Module',
-    'description' => ''
+    'description' => '*Write description here*'
 ];
