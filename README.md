@@ -180,7 +180,7 @@ The remaining tasks are experiential and still work in progress,
 | `require-laravel` | Clones Laravel and copy all files to project folder |`init`,`clean` |
 
 
-## Vontribution
+## Contribution
 
 We are more than happy to accept external contributions to the project in the form of feedback, bug reports and even better - pull requests :)
 
