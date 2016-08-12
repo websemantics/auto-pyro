@@ -48,10 +48,6 @@ return [
 
 	'namespaces' => [
 		'todo' => [
-			'name' => [
-			],
-			'complete' => [
-			]
 		]
 	],
 
@@ -67,7 +63,7 @@ return [
 	|
 	*/
 
-	'seeding' => 'builder',
+	'seeding' => 'no',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -98,7 +94,7 @@ return [
 	|
 	*/
 
-	'extends_repository' => 'Websemantics\IbuildModule\Common\CommonRepository',
+	'extends_repository' => null,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -121,9 +117,9 @@ return [
 	'avoid_overwrite' => [
 		'Model.php',
 		'Repository.php',
-		// 'TableColumns.php', /* uncomment this if you no longer want this to be overwritten */
-	    // 'FormBuilder.php'
-		// 'ModuleSeeder.php'
+		 // 'TableColumns.php', /* uncomment this if you no longer want this to be overwritten */
+	   // 'FormBuilder.php'
+		 // 'ModuleSeeder.php'
 	],
 
 	/*
@@ -137,20 +133,7 @@ return [
 	'docblock' =>
 ' *
  * 2011-2016 Web Semantics, Inc.
- * All Rights Reserved.
  *
- * NOTICE:  All information contained herein is, and remains
- * the property of Web Semantics, Inc. and its suppliers,
- * if any. The intellectual and technical concepts contained
- * herein are proprietary to Web Semantics, Inc.
- * and its suppliers and may be covered by Canadian and Foreign Patents,
- * patents in process, and are protected by trade secret or copyright law.
- * Dissemination of this information or reproduction of this material
- * is strictly forbidden unless prior written permission is obtained
- * from Web Semantics, Inc.
- *
- * @link      http://websemantics.ca/ibuild
- * @link      http://ibuild.io
+ * @link      http://websemantics.ca
  * @author    WebSemantics, Inc. <info@websemantics.ca>
- * @author    Adnan Sagar <msagar@websemantics.ca>'
 ];
