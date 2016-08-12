@@ -87,7 +87,7 @@ Quick list of the features and benefits of using Auto-Pyro,
 
 - [x] Complete installation and deployment of your PyroCMS projects from the command line
 - [x] Select which modules/addons (including core) to install or exclude
-- [x] Ecclusively track the project's code on Github
+- [x] Exclusively track the project's code on Github
 - [x] Get fresh PyroCMS 3 for new installs
 - [x] Install third party plugins directly from Github
 - [x] Automate database migration and seeding
