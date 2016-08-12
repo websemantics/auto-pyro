@@ -74,10 +74,10 @@ git clone https://github.com/websemantics/auto-pyro myapp
 
 2- Add your project `README.md`, `CONTRIBUTING.md` and `LICENSE.md` etc files.
 
-3- Create a module
+3- Create a `todo` module
 
 ```bash
-To be contributed
+php artisan make:addon websemantics.module.todo
 ```
 
 
