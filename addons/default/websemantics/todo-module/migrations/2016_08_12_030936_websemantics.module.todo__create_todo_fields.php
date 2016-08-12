@@ -13,10 +13,10 @@ class WebsemanticsModuleTodoCreateTodoFields extends Migration
     protected $fields = [
       'name' => [
           'type' => 'anomaly.field_type.text',
-          'config' => ['max_length' => 150],
+          'config' => ['max_length' => 150]
       ],
       'complete' => [
-          'type' => 'anomaly.field_type.boolean',
+          'type' => 'anomaly.field_type.boolean'
       ]
   ];
 
