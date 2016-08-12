@@ -77,7 +77,7 @@ git clone https://github.com/websemantics/auto-pyro myapp
 3- Create a module
 
 ```bash
-To be contribute
+To be contributed
 ```
 
 
