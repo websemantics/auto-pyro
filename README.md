@@ -77,10 +77,8 @@ git clone https://github.com/websemantics/auto-pyro myapp
 3- Create a `todo` module
 
 ```bash
+# Make Module using Entity Builder
 php artisan make:addon websemantics.module.todo
-
-php artisan make:stream list websemantics.module.todo
-php artisan make:module websemantics todo
 ```
 
 This will create a module at `addons/default/websemantics/todo-module`
