@@ -31,10 +31,6 @@
 /tests
 /addons/default/anomaly
 /addons/default/websemantics/entity_builder-extension
-/addons/default/ibuildio/mvc-module/vendor/
-/addons/default/ibuildio/storage-module/vendor/
-/addons/default/websemantics/builder-module/vendor/
-/addons/default/websemantics/core-module/vendor/
 /package.json
 /composer.json
 .env
