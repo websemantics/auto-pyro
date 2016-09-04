@@ -252,11 +252,11 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     #
-    #  T A R G E T : Clones PyroCMS and copy its files to project folder
+    #  T A R G E T : Clone PyroCMS and copy its files to project folder
     #
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <target name="require-pyro" depends="clean" description="Clones PyroCMS and copy its files to project folder">
+    <target name="require-pyro" depends="clean" description="Clone PyroCMS and copy its files to project folder">
 
         <echo message="Clone a fresh copy of pyrocms ... "/>
 
@@ -620,11 +620,11 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     #
-    #  E X P E R I M E N T A L  T A R G E T : Clones Laravel and copy all files to project folder
+    #  E X P E R I M E N T A L  T A R G E T : Clone Laravel and copy all files to project folder
     #
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <target name="require-laravel" depends="clean" description="Clones Laravel and copy all files to project folder.">
+    <target name="require-laravel" depends="clean" description="Clone Laravel and copy all files to project folder.">
 
         <echo message="Clone a fresh copy of laravel ... "/>
 
