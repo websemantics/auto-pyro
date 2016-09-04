@@ -125,16 +125,16 @@
             <arg line="artisan key:generate"/>
         </exec>
 
-        <echo message="- Running core migrations ..."/>
-
-        <exec dir="${app.dir}" executable="${env.PHP.bin}">
-            <arg line="artisan migrate --force --no-addons --path vendor/anomaly/streams-platform/migrations/core"/>
-        </exec>
-
         <echo message="- Running application migrations ..."/>
 
         <exec dir="${app.dir}" executable="${env.PHP.bin}">
-            <arg line="artisan migrate --force --no-addons --path vendor/anomaly/streams-platform/migrations/application"/>
+            <arg line="artisan migrate --force --path=vendor/anomaly/streams-platform/migrations/application"/>
+        </exec>
+
+        <echo message="- Running core migrations ..."/>
+
+        <exec dir="${app.dir}" executable="${env.PHP.bin}">
+            <arg line="artisan migrate --force --all-addons"/>
         </exec>
 
         <echo message="- Running other migrations ..."/>
