@@ -10,6 +10,8 @@
 /bootstrap
 /config
 /docs
+/tmp
+/routes
 /database
 /public/vendor
 /public/packages
