@@ -14,15 +14,6 @@
 /public/vendor
 /public/packages
 /public/app
-/public/js/dist
-/public/js/node_modules
-/public/js/src/ace-builds
-/public/js/src/dijit
-/public/js/src/dojo
-/public/js/src/dojox
-/public/js/src/gform
-/public/js/src/gridx
-/public/js/src/util
 /public/.htaccess
 /public/index.php
 /public/robots.txt
