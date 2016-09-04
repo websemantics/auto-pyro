@@ -275,21 +275,19 @@
             </sequential>
         </for>
 
-        <!-- move public folder -->
+        <!-- move folders inside public -->
         <for list="${env.PUBLIC_FOLDERS}" param="folder">
             <sequential>
                 <move file="${pyro.dir}/public/@{folder}" todir="${app.dir}/public" includeEmptyDirs="yes" failonerror="${failonerror}" quiet="${quiet}"/>
             </sequential>
         </for>
 
-        <!-- move files from root folder -->
-        <move todir="${app.dir}">
-            <filelist dir="${pyro.dir}">
-                <file name="artisan"/>
-                <file name="server.php"/>
-                <file name="composer.json"/>
-            </filelist>
-        </move>
+        <!-- move root folder files -->
+        <for list="${env.ROOT_FILES}" param="file">
+            <sequential>
+                <move file="${pyro.dir}/@{file}" todir="${app.dir}" failonerror="${failonerror}" quiet="${quiet}"/>
+            </sequential>
+        </for>
 
         <!-- move files from public folder -->
         <move todir="${app.dir}/public">
