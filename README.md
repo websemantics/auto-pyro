@@ -18,7 +18,7 @@
 
 ```
 
-> This is a [PyroCMS](https://www.pyrocms.com/) deploy tool with customization, install automation, better code tracing setup and other nice-to-have features aimed to maximize the pleasure of working with PyroCMS 3.
+> This is a [PyroCMS](https://www.pyrocms.com/) deploy tool with customization, install automation, better version control setup and other nice-to-have features aimed to maximize efficiencies while working with PyroCMS 3.
 
 
 ## Why
