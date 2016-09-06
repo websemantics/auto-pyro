@@ -42,7 +42,7 @@
 
 This repository contains all the essential files for Auto-Pyro. All you're required to do is to clone it and add your modules and addons inside `./addons/default` folder.
 
-** Work in Progress**
+**Work in Progress**
 
 ~~Ok, let's take Auto-Pyro for a ride before we dive into the details,~~
 
