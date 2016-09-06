@@ -98,7 +98,7 @@
     #
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <target name="install-pyro" depends="require-composer" description="Installs PyroCMS by running migrations, installing/seeding core modules/addons and creating the project .env file">
+    <target name="install-pyro" depends="composer-dependencies" description="Installs PyroCMS by running migrations, installing/seeding core modules/addons and creating the project .env file">
 
         <echo message="Starting PyroCMS installation ... "/>
 
@@ -234,13 +234,21 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     #
-    #  T A R G E T : Requires all composer dependencies
+    #  T A R G E T : Require / Remove composer packages
     #
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <target name="require-composer" depends="require-pyro" description="Requires all composer dependencies">
+    <target name="composer-dependencies" depends="require-pyro" description="Require and remove composer packages">
 
         <echo message="Run composer ..."/>
+
+        <for list="${env.COMPOSER.remove}" param="package">
+            <sequential>
+                <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+                    <arg line="remove @{package}"/>
+                </exec>
+            </sequential>
+        </for>
 
         <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
             <arg line="install"/>
