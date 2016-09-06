@@ -142,34 +142,14 @@
         <echo message="- Running core migrations ..."/>
 
         <exec dir="${app.dir}" executable="${env.PHP.bin}">
-            <arg line="artisan migrate --force --all-addons"/>
+            <arg line="artisan migrate --force"/>
         </exec>
 
         <echo message="- Running other migrations ..."/>
 
         <exec dir="${app.dir}" executable="${env.PHP.bin}">
-            <arg line="artisan migrate --force --no-addons"/>
+            <arg line="artisan migrate --force"/>
         </exec>
-
-        <echo message="- Installing core modules (and, remove excluded) ..."/>
-
-        <for list="${env.CORE_MODULES}" param="module">
-            <sequential>
-              <if>
-                <contains string="${env.MODULE_EXCLUDES}" substring="@{module}"/>
-                <then>
-                  <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
-                      <arg line="remove anomaly/@{module}-module"/>
-                  </exec>
-                </then>
-                <else>
-                  <exec dir="${app.dir}" executable="${env.PHP.bin}">
-                      <arg line="artisan module:install anomaly.module.@{module}"/>
-                  </exec>
-                </else>
-              </if>
-            </sequential>
-        </for>
 
         <echo message="- Installing core extensions (and, remove excluded) ..."/>
 
@@ -185,6 +165,26 @@
                 <else>
                   <exec dir="${app.dir}" executable="${env.PHP.bin}">
                     <arg line="artisan extension:install anomaly.extension.@{extension}"/>
+                  </exec>
+                </else>
+              </if>
+            </sequential>
+        </for>
+
+        <echo message="- Installing core modules (and, remove excluded) ..."/>
+
+        <for list="${env.CORE_MODULES}" param="module">
+            <sequential>
+              <if>
+                <contains string="${env.MODULE_EXCLUDES}" substring="@{module}"/>
+                <then>
+                  <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+                      <arg line="remove anomaly/@{module}-module"/>
+                  </exec>
+                </then>
+                <else>
+                  <exec dir="${app.dir}" executable="${env.PHP.bin}">
+                      <arg line="artisan module:install anomaly.module.@{module}"/>
                   </exec>
                 </else>
               </if>
