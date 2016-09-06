@@ -42,28 +42,30 @@
 
 This repository contains all the essential files for Auto-Pyro. All you're required to do is to clone it and add your modules and addons inside `./addons/default` folder.
 
-Ok, let's take Auto-Pyro for a ride before we dive into the details,
+** Work in Progress**
 
-1- Install the build tool [Apache Ant](http://ant.apache.org/)
+~~Ok, let's take Auto-Pyro for a ride before we dive into the details,~~
 
-2- Clone this repository into `auto-app`
+~~1- Install the build tool [Apache Ant](http://ant.apache.org/)~~
+
+~~2- Clone this repository into `auto-app`~~
 
 ```bash
 git clone https://github.com/websemantics/auto-pyro auto-app
 ```
 
-3- Configure the deploy properties from `./local.properties` (see [Environment Variables](#environment-variables) for more details)
+~~3- Configure the deploy properties from `./local.properties` (see [Environment Variables](#environment-variables) for more details)~~
 
-4- Create a database named `pyro` or see [DB_USERNAME](#environment-variables)
+~~4- Create a database named `pyro` or see [DB_USERNAME](#environment-variables)~~
 
-5- Deploy the project by executing `Ant` in the project folder,
+~~5- Deploy the project by executing `Ant` in the project folder,~~
 
 ```bash
 cd auto-app
 ant
 ```
 
-Set back until the deploy process is complete. The end result will be a fresh working copy of PyroCMS.
+~~Set back until the deploy process is complete. The end result will be a fresh working copy of PyroCMS.~~
 
 
 ## How To use
