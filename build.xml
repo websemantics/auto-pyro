@@ -242,14 +242,6 @@
 
         <echo message="Run composer ..."/>
 
-        <for list="${env.COMPOSER.remove}" param="package">
-            <sequential>
-                <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
-                    <arg line="remove @{package}"/>
-                </exec>
-            </sequential>
-        </for>
-
         <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
             <arg line="install"/>
         </exec>
@@ -258,6 +250,14 @@
             <sequential>
                 <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
                     <arg line="require @{package}"/>
+                </exec>
+            </sequential>
+        </for>
+
+        <for list="${env.COMPOSER.remove}" param="package">
+            <sequential>
+                <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+                    <arg line="remove @{package}"/>
                 </exec>
             </sequential>
         </for>
