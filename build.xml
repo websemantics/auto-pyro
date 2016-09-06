@@ -47,7 +47,6 @@
 
     <target name="default" depends="install" description="The default target to start project install"/>
 
-
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     #
     #  T A R G E T : Installs this project and runs post install tasks
@@ -155,19 +154,19 @@
 
         <for list="${env.CORE_EXTENSIONS}" param="extension">
             <sequential>
-              <if>
-                <contains string="${env.EXTENSION_EXCLUDES}" substring="@{extension}"/>
-                <then>
-                  <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
-                      <arg line="remove anomaly/@{extension}-extension"/>
-                  </exec>
-                </then>
-                <else>
-                  <exec dir="${app.dir}" executable="${env.PHP.bin}">
-                    <arg line="artisan extension:install anomaly.extension.@{extension}"/>
-                  </exec>
-                </else>
-              </if>
+                <if>
+                    <contains string="${env.EXTENSION_EXCLUDES}" substring="@{extension}"/>
+                    <then>
+                        <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+                            <arg line="remove anomaly/@{extension}-extension"/>
+                        </exec>
+                    </then>
+                    <else>
+                        <exec dir="${app.dir}" executable="${env.PHP.bin}">
+                            <arg line="artisan extension:install anomaly.extension.@{extension}"/>
+                        </exec>
+                    </else>
+                </if>
             </sequential>
         </for>
 
@@ -175,19 +174,27 @@
 
         <for list="${env.CORE_MODULES}" param="module">
             <sequential>
-              <if>
-                <contains string="${env.MODULE_EXCLUDES}" substring="@{module}"/>
-                <then>
-                  <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
-                      <arg line="remove anomaly/@{module}-module"/>
-                  </exec>
-                </then>
-                <else>
-                  <exec dir="${app.dir}" executable="${env.PHP.bin}">
-                      <arg line="artisan module:install anomaly.module.@{module}"/>
-                  </exec>
-                </else>
-              </if>
+                <if>
+                    <contains string="${env.MODULE_EXCLUDES}" substring="@{module}"/>
+                    <then>
+                        <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+                            <arg line="remove anomaly/@{module}-module"/>
+                        </exec>
+                    </then>
+                    <else>
+                        <exec dir="${app.dir}" executable="${env.PHP.bin}">
+                            <arg line="artisan module:install anomaly.module.@{module}"/>
+                        </exec>
+                    </else>
+                </if>
+            </sequential>
+        </for>
+
+        <for list="${env.PLUGIN_EXCLUDES}" param="plugin">
+            <sequential>
+                <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+                    <arg line="remove anomaly/@{plugin}-plugin"/>
+                </exec>
             </sequential>
         </for>
 
@@ -199,15 +206,15 @@
         <for list="${env.CORE_MODULES}" param="module">
             <sequential>
                 <if>
-                  <or>
-                    <contains string="${env.SEED_EXCLUDES}" substring="@{module}"/>
-                    <contains string="${env.MODULE_EXCLUDES}" substring="@{module}"/>
-                  </or>
-                  <else>
-                      <exec dir="${app.dir}" executable="${env.PHP.bin}">
-                          <arg line="artisan db:seed --force --addon anomaly.module.@{module}"/>
-                      </exec>
-                  </else>
+                    <or>
+                        <contains string="${env.SEED_EXCLUDES}" substring="@{module}"/>
+                        <contains string="${env.MODULE_EXCLUDES}" substring="@{module}"/>
+                    </or>
+                    <else>
+                        <exec dir="${app.dir}" executable="${env.PHP.bin}">
+                            <arg line="artisan db:seed --force --addon anomaly.module.@{module}"/>
+                        </exec>
+                    </else>
                 </if>
             </sequential>
         </for>
@@ -217,15 +224,15 @@
         <for list="${env.CORE_EXTENSIONS}" param="extension">
             <sequential>
                 <if>
-                  <or>
-                    <contains string="${env.SEED_EXCLUDES}" substring="@{extension}"/>
-                    <contains string="${env.EXTENSION_EXCLUDES}" substring="@{extension}"/>
-                  </or>
-                  <else>
-                      <exec dir="${app.dir}" executable="${env.PHP.bin}">
-                          <arg line="artisan db:seed --force --addon anomaly.extension.@{extension}"/>
-                      </exec>
-                  </else>
+                    <or>
+                        <contains string="${env.SEED_EXCLUDES}" substring="@{extension}"/>
+                        <contains string="${env.EXTENSION_EXCLUDES}" substring="@{extension}"/>
+                    </or>
+                    <else>
+                        <exec dir="${app.dir}" executable="${env.PHP.bin}">
+                            <arg line="artisan db:seed --force --addon anomaly.extension.@{extension}"/>
+                        </exec>
+                    </else>
                 </if>
             </sequential>
         </for>
@@ -355,7 +362,7 @@
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <!-- Download Ant dependencies -->
-        <mkdir dir="${app.dir}/lib" />
+        <mkdir dir="${app.dir}/lib"/>
         <get src="http://www.java2s.com/Code/JarDownload/ant-contrib/ant-contrib-1.0b3.jar.zip" dest="${app.dir}/lib/ant-contrib-1.0b3.jar.zip" usetimestamp="true" skipexisting="true" ignoreerrors="${ignoreerrors}" quiet="${quiet}"/>
         <unzip src="${app.dir}/lib/ant-contrib-1.0b3.jar.zip" dest="${app.dir}/lib"/>
 
@@ -407,7 +414,7 @@
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <target name="uninstall-addons" depends="init" description="Uninstall project addons">
-      <!-- Example to uninstall an extension
+        <!-- Example to uninstall an extension
         <exec dir="${app.dir}" executable="${env.PHP.bin}">
             <arg line="artisan extension:uninstall vendor.extension.name"/>
         </exec>
@@ -618,7 +625,7 @@
    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <target name="install-laravel" depends="require-laravel" description="Install PyroCMS on top of Laravel">
-      <!-- more to come -->
+        <!-- more to come -->
     </target>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
