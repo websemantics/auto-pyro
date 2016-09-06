@@ -1,17 +1,21 @@
 ```
- ____ _  _ ___ ____                     __ __ ____ _________ _
-  \__\ \  \  \  \  \                        _ _____________ __
-   \  \ \__\  \  \__\                          __ __ ______/  |
-    __________  _____     _____ __________       _________|    \_
-    |         \ \    \   /    / |          \        ____   \_    `-_
-    |    __    | \    \ /    /  |    __     |       /   \ 4  5.     \
-    |   |__)   |  \    V    /   |   |__)    |      /    /3     6\    \
-    |      ___/    \       /    |          <       |   |2    /  7|   |
-    |     |         |     |     |     |\    \      \    \1  /  8/    /
-    |     |         |     |     |     | \    \      \    `-.-.-'    /
-    |_____|         |_____|     |_____|  \____\      '-_        _-'
-                                                        `------'
-    PyroCMS Deploy Tool
+   ____ _  _ ___ ____                     __ __ ____ _________ _
+    \__\ \  \  \  \  \                        _ _____________ __
+     \  \ \__\  \  \__\                          __ __ ______/  |
+      __________  _____     _____ __________       _________|    \_
+      |         \ \    \   /    / |          \        ____   \_    `-_
+      |    __    | \    \ /    /  |    __     |       /   \ 4  5.     \
+      |   |__)   |  \    V    /   |   |__)    |      /    /3     6\    \
+      |      ___/    \       /    |          <       |   |2    /  7|   |
+      |     |         |     |     |     |\    \      \    \1  /  8/    /
+      |     |         |     |     |     | \    \      \    `-.-.-'    /
+      |_____|         |_____|     |_____|  \____\      '-_        _-'
+                                                          `------'
+
+                                       )))    
+                                      (o o)    
+    ----  PyroCMS Deploy Tool --- ooO--(_)--Ooo ----
+
 ```
 
 > This is a [PyroCMS](https://www.pyrocms.com/) deploy tool with customization, install automation, better code tracing setup and other nice-to-have features aimed to maximize the pleasure of working with PyroCMS 3.
@@ -99,6 +103,15 @@ Quick list of the features and benefits of using Auto-Pyro,
 - [ ] Install the Streams platform and PyroCMS core modules directly on Laravel (experimental)
 - [ ] Optionally, setup a [Vagrant](https://www.vagrantup.com/) environment
 
+
+## Changlelog
+
+1.0.0
+date: 2016-09-05
+changes:
+- Start Changlelog,
+- Update for PyroCMS 3.1 and Laravel 5.3,
+- Remove excluded addons with composer,
 
 ## Environment Variables
 

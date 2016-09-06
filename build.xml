@@ -4,7 +4,7 @@
 #    ____ _  _ ___ ____                      __ __ ____ _________ _
 #     \__\ \  \  \  \  \                         _ _____________ __
 #      \  \ \__\  \  \__\                           __ __ ______/  |
-#       _________  _____     _____ _________          _________|    \_
+#       _________   _____     _____  _________        _________|    \_
 #       |         \ \    \   /    / |          \         ____   \_    `-_
 #       |    __    | \    \ /    /  |    __     |       /   \ 4  5.     \
 #       |   |__)   |  \    V    /   |   |__)    |      /    /3     6\    \
@@ -14,7 +14,6 @@
 #       |_____|         |_____|     |_____|  \____\      '-_        _-'
 #                                                           `- - - '
 #       PyroCMS Deploy Tool v1.0
-#
 #
 #       This build file is desgined to automate the installation process
 #       of PyroCMS 3 apps, their addons, underlying framework (i.e. Laravel,
@@ -39,6 +38,15 @@
     <description>Automate the installation of the current project</description>
     <dirname property="project.dir" file="${ant.file}"/>
     <include file="${project.dir}/vagrant.xml" as="vagrant"/>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  D E F A U L T   T A R G E T : The default target to start project install
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="default" depends="install" description="The default target to start project install"/>
+
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     #
@@ -149,9 +157,10 @@
             <sequential>
               <if>
                 <contains string="${env.MODULE_EXCLUDES}" substring="@{module}"/>
-                <then><!-- DELETE MODULE EXCLUDES?
-                  <echo message="- deleting 'core/anomaly/@{module}-module' ..."/>
-                  <delete dir="${app.dir}/core/anomaly/@{module}-module" failonerror="${failonerror}"/> -->
+                <then>
+                  <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+                      <arg line="remove anomaly/@{module}-module"/>
+                  </exec>
                 </then>
                 <else>
                   <exec dir="${app.dir}" executable="${env.PHP.bin}">
@@ -168,9 +177,10 @@
             <sequential>
               <if>
                 <contains string="${env.EXTENSION_EXCLUDES}" substring="@{extension}"/>
-                <then><!-- DELETE EXTENSION EXCLUDES
-                  <echo message="- deleting 'core/anomaly/@{extension}-extension' ..."/>
-                  <delete dir="${app.dir}/core/anomaly/@{extension}-extension" failonerror="${failonerror}"/> -->
+                <then>
+                  <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+                      <arg line="remove anomaly/@{extension}-extension"/>
+                  </exec>
                 </then>
                 <else>
                   <exec dir="${app.dir}" executable="${env.PHP.bin}">
@@ -219,10 +229,6 @@
                 </if>
             </sequential>
         </for>
-
-        <echo message="- Deleting the Installer module and all execluded addons ..."/>
-
-        <delete dir="${installer.dir}" failonerror="${failonerror}"/>
 
     </target>
 
@@ -333,7 +339,6 @@
         <property file="local.properties"/>
         <property name="app.dir" value="${user.dir}"/>
         <property name="pyro.dir" value="${app.dir}/pyro"/>
-        <property name="installer.dir" value="${app.dir}/core/anomaly/installer-module"/>
         <property name="laravel.dir" value="${app.dir}/laravel"/>
         <property name="env.file" value="${app.dir}/.env"/>
 
@@ -372,14 +377,6 @@
         </if>
 
     </target>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    #
-    #  D E F A U L T   T A R G E T : The default target to start project install
-    #
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-    <target name="default" depends="install" description="The default target to start project install"/>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     #
