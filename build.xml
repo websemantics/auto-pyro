@@ -287,7 +287,7 @@
             <arg line="${pyro.dir}"/>
         </exec>
 
-        <exec dir="${app.dir}" executable="${env.GIT.bin}">
+        <exec dir="${pyro.dir}" executable="${env.GIT.bin}">
             <arg line="checkout"/>
             <arg line="${env.tag}"/>
         </exec>
