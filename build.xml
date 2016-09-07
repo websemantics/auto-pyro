@@ -287,6 +287,11 @@
             <arg line="${pyro.dir}"/>
         </exec>
 
+        <exec dir="${app.dir}" executable="${env.GIT.bin}">
+            <arg line="checkout"/>
+            <arg line="${env.tag}"/>
+        </exec>
+
         <echo message="Move PyroCMS files into the project folder ..."/>
 
         <!-- move root folders -->
