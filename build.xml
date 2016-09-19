@@ -81,7 +81,7 @@
 
         <echo message="Run artisan commands ..."/>
 
-        <for list="${env.ARTISAN}" param="command">
+        <for list="${env.ARTISAN}" param="command" delimiter=";">
             <sequential>
               <exec dir="${app.dir}" executable="${env.PHP.bin}">
                   <arg line="artisan @{command}"/>
