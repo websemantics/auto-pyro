@@ -18,10 +18,10 @@
 
 ```
 
-> This is a [PyroCMS](https://www.pyrocms.com/) deploy tool with customization, install automation, better version control setup and other nice-to-have features aimed to maximize efficiencies while working with PyroCMS 3.
+> This is a [PyroCMS 3](https://www.pyrocms.com/) deploy tool with customization, install automation, better version control setup and other nice-to-have features.
 
 
-## Why
+## Motivation
 
 - We don't always need to install, migrate or seed all PyroCMS core addons. For example, not seeding the `Pages` module will allow us to use the project [Twig](http://twig.sensiolabs.org/) views instead.
 
