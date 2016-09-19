@@ -23,13 +23,15 @@
 
 ## Motivation
 
+Here's a list of why this project can be of help when working with PyroCMS 3, mainly nice to have features that reduce the work required when starting new projects,
+
 - We don't always need to install, migrate or seed all PyroCMS core addons. For example, not seeding the `Pages` module will allow us to use the project [Twig](http://twig.sensiolabs.org/) views instead.
 
 - When building an app or a website with PyroCMS most of the project code commonly located in the well-recognized `./addons` folder. However, we often end-up tracking [app boilerplate](https://laravel.com/docs/5.2/lifecycle) code from [Laravel](https://laravel.com/) and PyroCMS core modules (located at `./core`) plus many other files in the project Github repository.
 
 - To gain the ability to have project own `README.md`, `CONTRIBUTING.md` and `LICENSE.md` files instead of the framework defaults.
 
-- Oftentimes we need to install third-party modules, themes and other addons from Github but end-up installing them manually and track them in the project Github repository (Addon package manger?).  
+- Oftentimes we need to install third-party modules, themes and other addons from Github but end-up installing them manually and track them in the project Github repository.  
 
 - Find it somewhat inconvenient to install dependencies for third-party/our own addons  ([Bower](https://bower.io/), [NPM](http://npmjs.com/), [Composer](https://getcomposer.org/), etc) or run build tasks (i.e [Grunt](http://gruntjs.com/), [Gulp](http://gulpjs.com/)) after every install.
 
@@ -37,35 +39,33 @@
 
 - Building Admin interfaces for new project modules / extensions can be time consuming. Having a build process that can take [migration files](https://www.pyrocms.com/documentation/streams-platform/migrations) and turn them into admin UIs would be nice.
 
+- And last but not least, how about the ability to encode your application modules and stream into the DNA of your auto-pyro install so that they are ready after each install?
+
 
 ## Get Started
 
-This repository contains all the essential files for Auto-Pyro. All you're required to do is to clone it and add your modules and addons inside `./addons/default` folder.
+This repository contains all the essential files for Auto-Pyro and comes pre-packaged with a `todo` module example. To use it, follow these steps,
 
-**Work in Progress**
+1- Install the build tool [Apache Ant](http://ant.apache.org/)
 
-~~Ok, let's take Auto-Pyro for a ride before we dive into the details,~~
-
-~~1- Install the build tool [Apache Ant](http://ant.apache.org/)~~
-
-~~2- Clone this repository into `auto-app`~~
+2- Clone this repository into `auto-app`
 
 ```bash
 git clone https://github.com/websemantics/auto-pyro auto-app
 ```
 
-~~3- Configure the deploy properties from `./local.properties` (see [Environment Variables](#environment-variables) for more details)~~
+3- Optionally, configure the deploy properties from `./local.properties` (see [Environment Variables](#environment-variables) for more details)
 
-~~4- Create a database named `pyro` or see [DB_USERNAME](#environment-variables)~~
+4- Create a database named `pyro` or see [DB_USERNAME](#environment-variables)
 
-~~5- Deploy the project by executing `Ant` in the project folder,~~
+5- Deploy the project by executing `Ant` in the project folder,
 
 ```bash
 cd auto-app
 ant
 ```
 
-~~Set back until the deploy process is complete. The end result will be a fresh working copy of PyroCMS.~~
+Set back until the deploy process is complete. The end result will be a fresh working copy of PyroCMS and a working `todo` module, located at ``.
 
 
 ## How To use
@@ -212,8 +212,8 @@ We are more than happy to accept external contributions to the project in the fo
   - Require Pyro Addons directly from Github,
   - Opt-out core Addons from seeding,
   - Run `artisan` commands after install
-  - Scaffolds and installs a `todo module` by default,
-  
+  - Scaffolds and installs a `todo` module by default,
+
 
 ## Support
 
