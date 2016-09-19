@@ -133,6 +133,7 @@
         <echo message="STANDARD_THEME=${env.STANDARD_THEME}&#10;" append="true" file="${env.file}"/>
         <echo message="DB_DRIVER=${env.DB_DRIVER}&#10;" append="true" file="${env.file}"/>
         <echo message="DB_HOST=${env.DB_HOST}&#10;" append="true" file="${env.file}"/>
+        <echo message="DB_PORT=${env.DB_PORT}&#10;" append="true" file="${env.file}"/>
         <echo message="DB_DATABASE=${env.DB_DATABASE}&#10;" append="true" file="${env.file}"/>
         <echo message="DB_USERNAME=${env.DB_USERNAME}&#10;" append="true" file="${env.file}"/>
         <echo message="DB_PASSWORD=${env.DB_PASSWORD}&#10;" append="true" file="${env.file}"/>
@@ -376,6 +377,14 @@
         <property name="pyro.dir" value="${app.dir}/pyro"/>
         <property name="laravel.dir" value="${app.dir}/laravel"/>
         <property name="env.file" value="${app.dir}/.env"/>
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        #  D A T A B A S E   P R O P E R T I E S
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <property name="database.url" value="jdbc:mysql://${env.DB_HOST}:${env.OPENSHIFT_MYSQL_DB_PORT}/${env.OPENSHIFT_APP_NAME}"/>
+			  <property name="database.driver" value="com.mysql.jdbc.Driver"/>
+			  <property name="drop_first" value="true"/>
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         #  C L A S S  P A T H  D E C E L E R A T I O N S
