@@ -212,7 +212,8 @@ We are more than happy to accept external contributions to the project in the fo
   - Require Pyro Addons directly from Github,
   - Opt-out core Addons from seeding,
   - Run `artisan` commands after install
-
+  - Scaffolds and installs a `todo module` by default,
+  
 
 ## Support
 
