@@ -33,7 +33,7 @@
 #       @author    Adnan M.Sagar, PhD. <adnan@websemantics.ca>
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-<project default="default" basedir="." name="Deploy a PyroCMS project">
+<project default="default" basedir="." name="Deploy a PyroCMS project" xmlns:liquibase="antlib:liquibase.integration.ant">
 
     <description>Automate the installation of the current project</description>
     <dirname property="project.dir" file="${ant.file}"/>
@@ -53,20 +53,9 @@
     #
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <target name="install" depends="init" description="Installs this project and runs post install tasks">
+    <target name="install" depends="run-artisan-commands" description="Installs this project and runs post install tasks">
 
         <echo message="Post-install actions ..."/>
-
-
-        <updateDatabase
-      	              changeLogFile="${changelog.file}"
-      	              driver="${database.driver}"
-      	              defaultSchemaName="${env.DB_DATABASE}"
-      	          		dropFirst="${drop_first}"
-      	              url="${database.url}"
-      	              username="${env.DB_USERNAME}"
-      	              password="${env.DB_PASSWORD}"
-      	              classpathref="jdbc.classpath"/>
 
         <!-- Example 1 : Install bower dependencies
 
@@ -128,7 +117,7 @@
     #
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <target name="install-pyro" depends="composer-dependencies" description="Installs PyroCMS by running migrations, installing/seeding core modules/addons and creating the project .env file">
+    <target name="install-pyro" depends="create-database" description="Installs PyroCMS by running migrations, installing/seeding core modules/addons and creating the project .env file">
 
         <echo message="Starting PyroCMS installation ... "/>
 
@@ -270,6 +259,30 @@
         </for>
 
     </target>
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Create Database
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="create-database" depends="composer-dependencies" description="Create database">
+
+      <if>
+        <equals arg1="${env.DB_DROP}" arg2="true"/>
+          <then>
+            <sql driver="com.mysql.jdbc.Driver" url="${db.server.url}" userid="${db.user}"
+              password="${db.pass}" classpathref="jdbc.classpath"><![CDATA[
+              DROP DATABASE IF EXISTS ${db.name}; ]]>
+            </sql>
+          </then>
+      </if>
+
+      <sql driver="com.mysql.jdbc.Driver" url="${db.server.url}" userid="${db.user}"
+        password="${db.pass}" classpathref="jdbc.classpath"><![CDATA[
+        CREATE DATABASE IF NOT EXISTS ${db.name}; ]]>
+      </sql>
+
+    </target>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     #
@@ -392,25 +405,18 @@
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         #  D A T A B A S E   P R O P E R T I E S
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-        <property name="changelog.file" value="changelog.xml"/>
-        <property name="database.url" value="jdbc:mysql://${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}"/>
-			  <property name="database.driver" value="com.mysql.jdbc.Driver"/>
-			  <property name="dropFirst" value="true"/>
-
-        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        #  C L A S S  P A T H  D E C E L E R A T I O N S
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <property name="db.changelog.file" value="changelog.xml"/>
+        <property name="db.server.url" value="jdbc:mysql://${env.DB_HOST}:${env.DB_PORT}"/>
+        <property name="db.url" value="jdbc:mysql://${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}"/>
+        <property name="db.user" value="${env.DB_USERNAME}"/>
+        <property name="db.pass" value="${env.DB_PASSWORD}"/>
+        <property name="db.name" value="${env.DB_DATABASE}"/>
+			  <property name="db.driver" value="com.mysql.jdbc.Driver"/>
+			  <property name="db.dropFirst" value="true"/>
 
         <!-- Set jdbc folder path -->
   			<path id="jdbc.classpath">
   			  <fileset dir="${app.dir}/lib">
-  			    <include name="mysql-connector-java-5.1.23-bin.jar"/>
-  			  </fileset>
-  			</path>
-
-        <path id="liquibase.classpath">
-  			  <fileset dir="${app.dir}/lib">
-  			    <include name="liquibase.jar"/>
   			    <include name="mysql-connector-java-5.1.23-bin.jar"/>
   			  </fileset>
   			</path>
@@ -429,10 +435,6 @@
         <get src="http://www.java2s.com/Code/JarDownload/mysql/mysql-connector-java-5.1.23-bin.jar.zip" dest="${app.dir}/lib/mysql-connector-java-5.1.23-bin.jar.zip" usetimestamp="true" skipexisting="true" ignoreerrors="${ignoreerrors}" quiet="${quiet}"/>
         <unzip src="${app.dir}/lib/mysql-connector-java-5.1.23-bin.jar.zip" dest="${app.dir}/lib"/>
 
-        <!-- Liquibase -->
-        <get src="http://www.java2s.com/Code/JarDownload/liquibase/liquibase-core-3.3.1.jar.zip" dest="${app.dir}/lib/liquibase-core-3.3.1.jar.zip" usetimestamp="true" skipexisting="true" ignoreerrors="${ignoreerrors}" quiet="${quiet}"/>
-        <unzip src="${app.dir}/lib/liquibase-core-3.3.1.jar.zip" dest="${app.dir}/lib"/>
-
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         #  T A S K   D E F I N I T I O N S
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -440,8 +442,33 @@
         <!-- Include Ant Contrin Tasks -->
         <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${app.dir}/lib/ant-contrib-1.0b3.jar"/>
 
-        <!-- Liquibase -->
-    		<taskdef resource="liquibasetasks.properties" classpathref="liquibase.classpath"/>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        #  L I Q U I B A S E  D A T A B A S E
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <if>
+          <equals arg1="${env.LIQUIBASE}" arg2="true"/>
+          <then>
+            <path id="liquibase.classpath">
+                <fileset dir="${app.dir}/lib/lib">
+                    <include name="**/*.jar" />
+                </fileset>
+                <fileset dir="${app.dir}/lib">
+                    <include name="liquibase.jar" />
+                </fileset>
+            </path>
+            <!-- download libraries -->
+            <get src="https://github.com/liquibase/liquibase/releases/download/liquibase-parent-3.5.1/liquibase-3.5.1-bin.zip" dest="${app.dir}/lib/liquibase-3.5.1-bin.zip" usetimestamp="true" skipexisting="true" ignoreerrors="${ignoreerrors}" quiet="${quiet}"/>
+            <unzip src="${app.dir}/lib/liquibase-3.5.1-bin.zip" dest="${app.dir}/lib"/>
+            <!-- define tasks -->
+            <taskdef resource="liquibase/integration/ant/antlib.xml" uri="antlib:liquibase.integration.ant">
+              <classpath refid="liquibase.classpath" />
+            </taskdef>
+            <!-- define database reference -->
+            <liquibase:database id="db" driver="${db.driver}" url="${db.url}" user="${db.user}"
+             password="${db.pass}" defaultSchemaName="${db.name}" />
+          </then>
+        </if>
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         #  D E B U G  P R O P E R T I E S
@@ -687,12 +714,18 @@
     </macrodef>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-   #
-   #
-   #
+    # E X P E R I M E N T A L  T A R G E T : Update database with liquibase schema
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <target name="update-database" depends="init" description="Update database with liquibase schema">
+
+      <liquibase:updateDatabase databaseref="db" changelogfile="${db.changelog.file}"
+        classpathref="jdbc.classpath" dropFirst="${drop_first}" logLevel="debug">
+        </liquibase:updateDatabase>
+
+    </target>
+
+   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    # E X P E R I M E N T A L  T A R G E T : Install PyroCMS on top of Laravel
-   #
-   #
    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <target name="install-laravel" depends="require-laravel" description="Install PyroCMS on top of Laravel">
@@ -700,9 +733,7 @@
     </target>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    #
     #  E X P E R I M E N T A L  T A R G E T : Clone Laravel and copy all files to project folder
-    #
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <target name="require-laravel" depends="clean" description="Clone Laravel and copy all files to project folder.">

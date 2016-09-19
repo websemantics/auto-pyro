@@ -164,7 +164,8 @@ To better understand the deploy script in `build.xml`, here's a list of all the 
 | 9 | `install` | Deploys this project and runs post deploy tasks | `run-artisan-commands` |
 | 8 | `run-artisan-commands` | Run artisan commands | `require-install-addons` |
 | 7 | `require-install-addons` | Requires and installs project addons and all the front-end, css, npm, grunt libraries | `install-pyro` |
-| 5 | `install-pyro` | Installs PyroCMS by running migrations, installing/seeding core modules/addons and creating the project .env file | `require-composer` |
+| 6 | `install-pyro` | Installs PyroCMS by running migrations, installing/seeding core modules/addons and creating the project .env file | `create-database` |
+| 5 | `create-database` | Create database | `require-composer` |
 | 4 | `require-composer` | Requires all composer dependencies | `require-pyro` |
 | 3 | `require-pyro` | Clones PyroCMS and copy its files to project folder | `clean` |
 | 2 | `clean` | Delete `temp` folders and the project .env file | `init` |
@@ -184,6 +185,8 @@ The remaining tasks are experiential and still work in progress,
 | ------------- |:-------------:|:-------------:|
 | `install-laravel` | Install PyroCMS on top of Laravel |`require-laravel` |
 | `require-laravel` | Clones Laravel and copy all files to project folder |`init`,`clean` |
+| `update-database` | Update database with liquibase schema |`init` |
+
 
 ## Changelog
 
