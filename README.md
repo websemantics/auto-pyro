@@ -20,10 +20,57 @@
 
 > This is a [PyroCMS 3](https://www.pyrocms.com/) deploy tool with customization, install automation, better version control setup and other nice-to-have features.
 
+## Get Started
+
+Auto-pyro downloads, configure, install and deploy a complete Pyro app with all required addons and packages. It automatically installs the [Pyro Builder](https://github.com/websemantics/builder-extension) and comes pre-configured with a [todo module](#todo-module) out of the box. Let's take it for a spin before diving into the details,
+
+1- Install [Apache Ant](http://ant.apache.org/),
+
+```bash
+brew install ant
+```
+
+Apache Ant is an awesome build tool and despite its seemingly dated xml format, it can achieve great feats.
+
+2- Clone this repository into `my-app`,
+
+```bash
+git clone https://github.com/websemantics/auto-pyro my-app
+```
+
+3- Add other project files, for example, `README.md`, `CONTRIBUTING.md` and `LICENSE.md` etc,
+
+4- Configure the properties file,`./local.properties` with database settings (see [Environment Variables](#environment-variables) for more details). The script will create a fresh database every time it runs,
+
+5- Deploy the app by executing the command `ant` in the project folder,
+
+```bash
+cd my-app
+ant
+```
+
+Set back until the deploy process is complete. Browse to the project to view, for example, http://my-app.dev.
+
+## Todo Module
+
+This is a simple module that is used to demonstrate features of Auto-pyro and the [Pyro Builder](https://github.com/websemantics/builder-extension),
+
+It is achieved as the result of executing a number of artisan commands as follows,
+
+```bash
+# Start with scaffolding a new module
+php artisan make:addon websemantics.module.todo,
+# Make a stream and fields migrations
+php artisan make:stream 'task:tc(name),name,description:t(anomaly.field_type.textarea),completed:t(anomaly.field_type.boolean)' websemantics.module.todo
+# Finally, install the module, done!
+php artisan module:install websemantics.module.todo
+```
+
+Check `env.ARTISAN` at properties files  `./local.properties` for details,
 
 ## Motivation
 
-Here's a list of why this project can be of help when working with PyroCMS 3, mainly nice to have features that reduce the work required when starting new projects,
+Here's a list of why this project can be of help when working with PyroCMS 3, mainly nice to have features that reduce the workload required when starting new projects,
 
 - We don't always need to install, migrate or seed all PyroCMS core addons. For example, not seeding the `Pages` module will allow us to use the project [Twig](http://twig.sensiolabs.org/) views instead.
 
@@ -41,79 +88,22 @@ Here's a list of why this project can be of help when working with PyroCMS 3, ma
 
 - And last but not least, how about the ability to encode your application modules and stream into the DNA of your auto-pyro install so that they are ready after each install?
 
-
-## Get Started
-
-This repository contains all the essential files for Auto-Pyro and comes pre-packaged with a `todo` module example. To use it, follow these steps,
-
-1- Install the build tool [Apache Ant](http://ant.apache.org/)
-
-2- Clone this repository into `auto-app`
-
-```bash
-git clone https://github.com/websemantics/auto-pyro auto-app
-```
-
-3- Optionally, configure the deploy properties from `./local.properties` (see [Environment Variables](#environment-variables) for more details)
-
-4- Create a database named `pyro` or see [DB_USERNAME](#environment-variables)
-
-5- Deploy the project by executing `Ant` in the project folder,
-
-```bash
-cd auto-app
-ant
-```
-
-Set back until the deploy process is complete. The end result will be a fresh working copy of PyroCMS and a working `todo` module, located at ``.
-
-
-## How To use
-
-To start using Auto-Pyro for your own projects, here's how,
-
-1- [Fork](https://github.com/websemantics/auto-pyro#fork-destination-box) or clone this repository and rename it to your own project, `myapp`
-
-```bash
-git clone https://github.com/websemantics/auto-pyro myapp
-```
-
-2- Add your project `README.md`, `CONTRIBUTING.md` and `LICENSE.md` etc files.
-
-3- Create a `todo` module
-
-```bash
-# Make Module using Entity Builder
-php artisan make:addon websemantics.module.todo
-```
-
-This will create a module at `addons/default/websemantics/todo-module`
-
 ## Features
 
-Quick list of the features and benefits of using Auto-Pyro,
+Quick list of the features and benefits of using Auto-pyro,
 
-- [x] Complete installation and deployment of your PyroCMS projects from the command line
-- [x] Select which modules/addons (including core) to install or exclude
-- [x] Exclusively track the project's code on Github
-- [x] Get fresh PyroCMS 3 for new installs
-- [x] Install third party plugins directly from Github
-- [x] Automate database migration and seeding
-- [x] Install front-end, node, composer and other dependencies for your projects
-- [x] Speed your Admin development with the [Entity Builder](https://github.com/websemantics/entity_builder-extension) (included)
-- [x] Painless removal of the Installer Module and other excluded addons after installation is complete
-- [ ] Install the Streams platform and PyroCMS core modules directly on Laravel (experimental)
-- [ ] Optionally, setup a [Vagrant](https://www.vagrantup.com/) environment
-
-
-## Changlelog
-
-1.0.0
-date: 2016-09-05
-changes:
-- Start Changlelog,
-- Update for PyroCMS 3.1 and Laravel 5.3,
-- Remove excluded addons with composer,
+- [x] Complete installation and deployment of Pyro projects from the command line,
+- [x] Select which modules/addons (including core) to install or exclude,
+- [x] Exclusively track the project's code on Github,
+- [x] Get fresh Pyro 3 for new installs,
+- [x] Install third party plugins directly from Github,
+- [x] Automate database migration and seeding,
+- [x] Install front-end, node, composer and other dependencies for the app or its dependencies,
+- [x] Speed Admin development with the [Builder](https://github.com/websemantics/builder-extension) (included),
+- [x] Painless removal of the Installer Module and other excluded addons after installation is complete,
+- [x] Execute artisan commands after install,
+- [ ] Install the Streams platform and PyroCMS core modules directly on Laravel (experimental),
+- [ ] Optionally, setup a [Vagrant](https://www.vagrantup.com/) environment,
 
 ## Environment Variables
 
@@ -151,15 +141,13 @@ Configuration of core addons
 | MODULE_EXCLUDES | `pages`,`post` |  Don't install modules (comma-separated list) |
 | EXTENSION_EXCLUDES | `default_page_handler`,`page_link_type`  | Don't install extensions (comma-separated list) |
 
-
 ## Deploy Script
 
 The deploy script is written for [Apache Ant](http://ant.apache.org/) and can be found at `./build.xml`.
 
-
 #### Targets
 
-Targets are equivalent to `methods` in PHP. When the `ant` command is invoked, it looks for `build.xml` at the current folder and runs the `default` target.
+Targets are equivalent to `methods` in PHP. When the `ant` command is invoked, it looks for `./build.xml` at the current folder and runs the `default` target.
 
 To get a list of targets,
 
@@ -172,8 +160,9 @@ To better understand the deploy script in `build.xml`, here's a list of all the 
 
 | Order         | Target        | Description   | Dependencies |
 | ------------- |:-------------:|:-------------:|:-------------:|
-| 9 | `default` | The default target to start project deploy |`install` |
-| 8 | `install` | Deploys this project and runs post deploy tasks | `require-install-addons` |
+| 10 | `default` | The default target to start project deploy |`install` |
+| 9 | `install` | Deploys this project and runs post deploy tasks | `run-artisan-commands` |
+| 8 | `run-artisan-commands` | Run artisan commands | `require-install-addons` |
 | 7 | `require-install-addons` | Requires and installs project addons and all the front-end, css, npm, grunt libraries | `install-pyro` |
 | 5 | `install-pyro` | Installs PyroCMS by running migrations, installing/seeding core modules/addons and creating the project .env file | `require-composer` |
 | 4 | `require-composer` | Requires all composer dependencies | `require-pyro` |
@@ -181,7 +170,7 @@ To better understand the deploy script in `build.xml`, here's a list of all the 
 | 2 | `clean` | Delete `temp` folders and the project .env file | `init` |
 | 1 | `init` | Loads project properties, task definitions and other environment settings | * |
 
-Finally, there are few empty tagets with examples to use with common tasks, for example, install, uninstall or reinstall the project addons when in development mode,
+There are few empty targets with examples to use with common tasks, for example, install, uninstall or reinstall the project addons when in development mode,
 
 | Target        | Description     | Dependencies |
 | ------------- |:-------------:|:-------------:|
@@ -196,24 +185,20 @@ The remaining tasks are experiential and still work in progress,
 | `install-laravel` | Install PyroCMS on top of Laravel |`require-laravel` |
 | `require-laravel` | Clones Laravel and copy all files to project folder |`init`,`clean` |
 
-
-## Contribution
-
-We are more than happy to accept external contributions to the project in the form of feedback, bug reports and even better - pull requests :)
-
-
 ## Changelog
 
 1.0.0
   date: 2016-09-18
   changes:
+  - Start Changelog,
+  - Update for PyroCMS 3.1 and Laravel 5.3,
   - Install and deploy Pyro from the command line with a single command, `ant`
   - Include / exclude core Pyro addons,
   - Require Pyro Addons directly from Github,
   - Opt-out core Addons from seeding,
   - Run `artisan` commands after install
+  - Install [Pyro Builder](https://github.com/websemantics/builder-extension) by default,
   - Scaffolds and installs a `todo` module by default,
-
 
 ## Support
 
@@ -221,12 +206,14 @@ Need help or have a question? post a questions at [StackOverflow](https://stacko
 
 *Please don't use the issue trackers for support/questions.*
 
+## Contribution
+
+We are more than happy to accept external contributions to the project in the form of feedback, bug reports and even better - pull requests :)
 
 ## Links
 
 - [PyroCMS](https://www.pyrocms.com/)
-- [PyroCMS Entity Builder](https://github.com/websemantics/entity_builder-extension)
-
+- [Pyro Builder](https://github.com/websemantics/builder-extension)
 
 ## License
 

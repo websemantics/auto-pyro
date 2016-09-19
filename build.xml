@@ -53,7 +53,7 @@
     #
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <target name="install" depends="run-artisan-commands" description="Installs this project and runs post install tasks">
+    <target name="install" depends="init" description="Installs this project and runs post install tasks">
 
         <echo message="Post-install actions ..."/>
 
@@ -378,19 +378,50 @@
         <property name="env.file" value="${app.dir}/.env"/>
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        #  R E S O L V E   D E P E N D E N C I E S
+        #  C L A S S  P A T H  D E C E L E R A T I O N S
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-        <!-- Download Ant dependencies -->
+        <!-- Set jdbc folder path -->
+  			<path id="jdbc.classpath">
+  			  <fileset dir="${app.dir}/lib">
+  			    <include name="mysql-connector-java-5.1.23-bin.jar"/>
+  			  </fileset>
+  			</path>
+
+        <path id="liquibase.classpath">
+  			  <fileset dir="${app.dir}/lib">
+  			    <include name="liquibase.jar"/>
+  			    <include name="mysql-connector-java-5.1.23-bin.jar"/>
+  			  </fileset>
+  			</path>
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        #  D O W N L O A D   A N T   D E P E N D E N C I E S
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
         <mkdir dir="${app.dir}/lib"/>
+
+        <!-- Ant-contrib -->
         <get src="http://www.java2s.com/Code/JarDownload/ant-contrib/ant-contrib-1.0b3.jar.zip" dest="${app.dir}/lib/ant-contrib-1.0b3.jar.zip" usetimestamp="true" skipexisting="true" ignoreerrors="${ignoreerrors}" quiet="${quiet}"/>
         <unzip src="${app.dir}/lib/ant-contrib-1.0b3.jar.zip" dest="${app.dir}/lib"/>
+
+        <!-- MySql-connector -->
+        <get src="http://www.java2s.com/Code/JarDownload/mysql/mysql-connector-java-5.1.23-bin.jar.zip" dest="${app.dir}/lib/mysql-connector-java-5.1.23-bin.jar.zip" usetimestamp="true" skipexisting="true" ignoreerrors="${ignoreerrors}" quiet="${quiet}"/>
+        <unzip src="${app.dir}/lib/mysql-connector-java-5.1.23-bin.jar.zip" dest="${app.dir}/lib"/>
+
+        <!-- Liquibase -->
+        <get src="http://www.java2s.com/Code/JarDownload/liquibase/liquibase-core-3.3.1.jar.zip" dest="${app.dir}/lib/liquibase-core-3.3.1.jar.zip" usetimestamp="true" skipexisting="true" ignoreerrors="${ignoreerrors}" quiet="${quiet}"/>
+        <unzip src="${app.dir}/lib/liquibase-core-3.3.1.jar.zip" dest="${app.dir}/lib"/>
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         #  T A S K   D E F I N I T I O N S
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+        <!-- Include Ant Contrin Tasks -->
         <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${app.dir}/lib/ant-contrib-1.0b3.jar"/>
+
+        <!-- Liquibase -->
+    		<taskdef resource="liquibasetasks.properties" classpathref="liquibase.classpath"/>
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         #  D E B U G  P R O P E R T I E S
