@@ -22,7 +22,7 @@
 
 ## Get Started
 
-Auto-pyro downloads, configure, install and deploy a complete Pyro app with all required addons and packages. It automatically installs the [Pyro Builder](https://github.com/websemantics/builder-extension) and comes pre-configured with a [todo module](#todo-module) out of the box. Let's take it for a spin before diving into the details,
+Auto-pyro downloads, configure, install and deploy a complete Pyro app with all required addons and packages. It automatically installs [Pyro Builder](https://github.com/websemantics/builder-extension) and comes pre-configured with a [todo module](#todo-module) out of the box. Let's take it for a spin before diving into the details,
 
 1- Install [Apache Ant](http://ant.apache.org/),
 
@@ -53,7 +53,7 @@ Set back until the deploy process is complete. Browse to the project to view, fo
 
 ## Todo Module
 
-This is a simple module that is used to demonstrate features of Auto-pyro and the [Pyro Builder](https://github.com/websemantics/builder-extension),
+This is a simple module that is used to demonstrate features of Auto-pyro and [Pyro Builder](https://github.com/websemantics/builder-extension),
 
 It is achieved as the result of executing a number of artisan commands as follows,
 
