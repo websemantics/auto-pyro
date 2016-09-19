@@ -24,11 +24,11 @@
 
 Auto-pyro downloads, configure, install and deploy a complete Pyro app with all required addons and packages. It automatically installs [Pyro Builder](https://github.com/websemantics/builder-extension) and comes pre-configured with a [todo module](#todo-module) out of the box.
 
-Here's a video to demonstrate how it works,
+Here's a video to demonstrate how it works (click on the image)
 
 [![Auto pyro, a deploy tool for Pyro 3](http://img.youtube.com/vi/rP0YVmAeE58/0.jpg)](https://www.youtube.com/watch?v=rP0YVmAeE58)
 
-The following steps sum-up what was achieved in the video,
+And, the following steps sum-up what was achieved in the video,
 
 1- Install [Apache Ant](http://ant.apache.org/),
 
