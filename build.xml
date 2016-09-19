@@ -57,6 +57,17 @@
 
         <echo message="Post-install actions ..."/>
 
+
+        <updateDatabase
+      	              changeLogFile="${db.changelog.file}"
+      	              driver="${database.driver}"
+      	              defaultSchemaName="${env.OPENSHIFT_APP_NAME}"
+      	          		dropFirst="${drop_first}"
+      	              url="${database.url}"
+      	              username="${database.username}"
+      	              password="${database.password}"
+      	              classpathref="jdbc.classpath"/>
+
         <!-- Example 1 : Install bower dependencies
 
         <exec dir="${app.dir}/public/js" executable="${env.BOWER.bin}">
@@ -381,8 +392,8 @@
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         #  D A T A B A S E   P R O P E R T I E S
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-        <property name="database.url" value="jdbc:mysql://${env.DB_HOST}:${env.OPENSHIFT_MYSQL_DB_PORT}/${env.OPENSHIFT_APP_NAME}"/>
+        <property name="changelog.file" value="changelog.xml"/>
+        <property name="database.url" value="jdbc:mysql://${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}"/>
 			  <property name="database.driver" value="com.mysql.jdbc.Driver"/>
 			  <property name="drop_first" value="true"/>
 
