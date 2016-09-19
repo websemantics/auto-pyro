@@ -202,6 +202,18 @@ The remaining tasks are experiential and still work in progress,
 We are more than happy to accept external contributions to the project in the form of feedback, bug reports and even better - pull requests :)
 
 
+## Changelog
+
+1.0.0
+  date: 2016-09-18
+  changes:
+  - Install and deploy Pyro from the command line with a single command, `ant`
+  - Include / exclude core Pyro addons,
+  - Require Pyro Addons directly from Github,
+  - Opt-out core Addons from seeding,
+  - Run `artisan` commands after install
+
+
 ## Support
 
 Need help or have a question? post a questions at [StackOverflow](https://stackoverflow.com/questions/tagged/auto-pyro)
