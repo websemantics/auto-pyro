@@ -53,7 +53,7 @@
     #
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <target name="install" depends="require-install-addons" description="Installs this project and runs post install tasks">
+    <target name="install" depends="run-artisan-commands" description="Installs this project and runs post install tasks">
 
         <echo message="Post-install actions ..."/>
 
@@ -68,6 +68,26 @@
         <exec dir="${app.dir}" executable="${env.NPM.bin}">
             <arg line=" i less"/>
         </exec>  -->
+
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    #  T A R G E T : Run artisan commands
+    #
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <target name="run-artisan-commands" depends="require-install-addons" description="Run artisan commands">
+
+        <echo message="Run artisan commands ..."/>
+
+        <for list="${env.ARTISAN}" param="command">
+            <sequential>
+              <exec dir="${app.dir}" executable="${env.PHP.bin}">
+                  <arg line="artisan @{command}"/>
+              </exec>
+            </sequential>
+        </for>
 
     </target>
 
