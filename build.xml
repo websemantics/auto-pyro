@@ -59,13 +59,13 @@
 
 
         <updateDatabase
-      	              changeLogFile="${db.changelog.file}"
+      	              changeLogFile="${changelog.file}"
       	              driver="${database.driver}"
-      	              defaultSchemaName="${env.OPENSHIFT_APP_NAME}"
+      	              defaultSchemaName="${env.DB_DATABASE}"
       	          		dropFirst="${drop_first}"
       	              url="${database.url}"
-      	              username="${database.username}"
-      	              password="${database.password}"
+      	              username="${env.DB_USERNAME}"
+      	              password="${env.DB_PASSWORD}"
       	              classpathref="jdbc.classpath"/>
 
         <!-- Example 1 : Install bower dependencies
@@ -395,7 +395,7 @@
         <property name="changelog.file" value="changelog.xml"/>
         <property name="database.url" value="jdbc:mysql://${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}"/>
 			  <property name="database.driver" value="com.mysql.jdbc.Driver"/>
-			  <property name="drop_first" value="true"/>
+			  <property name="dropFirst" value="true"/>
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         #  C L A S S  P A T H  D E C E L E R A T I O N S
