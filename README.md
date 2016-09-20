@@ -36,7 +36,7 @@ And, the following steps sum-up what was achieved in the video,
 brew install ant
 ```
 
-Apache Ant is an awesome build tool and despite its seemingly dated xml format, it can achieve great feats. [Tutsplus](https://tutsplus.com/) has a great article called, [Automate your Projects with Apache Any](https://code.tutsplus.com/tutorials/automate-your-projects-with-apache-ant--net-18595) to introduce the tool to new comers. 
+Apache Ant is an awesome build tool and despite its seemingly dated xml format, it can achieve great feats. [Tutsplus](https://tutsplus.com/) has a great article called, [Automate your Projects with Apache Ant](https://code.tutsplus.com/tutorials/automate-your-projects-with-apache-ant--net-18595) to introduce the tool to new comers. 
 
 2- Clone this repository into `my-app`,
 
