@@ -94,7 +94,7 @@ Here's a list of why this project can be of help when working with PyroCMS 3, ma
 
 - Building Admin interfaces for new project modules / extensions can be time consuming. Having a build process that can take [migration files](https://www.pyrocms.com/documentation/streams-platform/migrations) and turn them into admin UIs would be nice.
 
-- And last but not least, how about the ability to encode your application modules and stream into the DNA of your auto-pyro install so that they are ready after each install?
+- And last but not least, how about the ability to encode your application modules and streams into the DNA of your auto-pyro install so that they are ready after each install?
 
 ## Features
 
