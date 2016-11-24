@@ -13,7 +13,7 @@
 #       |     |         |     |     |     | \    \      \    `-.-.-'    /
 #       |_____|         |_____|     |_____|  \____\      '-_        _-'
 #                                                           `- - - '
-#       PyroCMS Deploy Tool v1.0
+#       PyroCMS Deploy Tool v1.1
 #
 #       This build file is desgined to automate the installation process
 #       of PyroCMS 3 apps, their addons, underlying framework (i.e. Laravel,
@@ -328,7 +328,9 @@
 
         <exec dir="${app.dir}" executable="${env.GIT.bin}">
             <arg line="clone"/>
-            <arg line="https://github.com/pyrocms/pyrocms"/>
+            <arg line="-b ${env.pyro.branch}"/>
+            <arg line="${app.dir}"/>
+            <arg line="${env.pyro.repo}"/>
             <arg line="${pyro.dir}"/>
         </exec>
 
