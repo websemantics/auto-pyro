@@ -328,9 +328,9 @@
 
         <exec dir="${app.dir}" executable="${env.GIT.bin}">
             <arg line="clone"/>
-            <arg line="-b ${env.pyro.branch}"/>
-            <arg line="${app.dir}"/>
-            <arg line="${env.pyro.repo}"/>
+            <arg line="-b"/>
+            <arg line="${env.PYRO.branch}"/>
+            <arg line="${env.PYRO.repo}"/>
             <arg line="${pyro.dir}"/>
         </exec>
 
