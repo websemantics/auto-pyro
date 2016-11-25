@@ -282,6 +282,8 @@
 
     <target name="create-database" depends="composer-dependencies" description="Create database">
 
+      <echo message="- Creating ${db.name} database ..."/>
+
       <if>
         <equals arg1="${env.DB_DROP}" arg2="true"/>
           <then>
