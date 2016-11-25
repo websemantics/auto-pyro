@@ -14,15 +14,14 @@
 
                                        )))    
                                       (o o)    
-    ----  PyroCMS Deploy Tool --- ooO--(_)--Ooo ----
-
+    ----  PyroCMS Deploy Tool v1.2 --- ooO--(_)--Ooo ----
 ```
 
 > This is a [PyroCMS 3](https://www.pyrocms.com/) deploy tool with customization, install automation, better version control setup and other nice-to-have features.
 
 ## Get Started
 
-Auto-pyro downloads, configure, install and deploy a complete Pyro app with all required addons and packages. It automatically installs [Pyro Builder](https://github.com/websemantics/builder-extension) and comes pre-configured with a [todo module](#todo-module) out of the box.
+Auto-pyro downloads, configures, installs and deploys a complete Pyro app with optional / required addons and packages. It automatically installs [Pyro Builder](https://github.com/websemantics/builder-extension) and comes pre-configured with a [todo module](#todo-module) example out of the box.
 
 Here's a video to demonstrate how it works (click on the image)
 
@@ -56,6 +55,14 @@ ant
 ```
 
 Set back until the deploy process is complete. Browse to the project to view, for example, http://my-app.dev.
+
+A setup switch `setup` is available for you to only install Pyro.
+
+```bash
+ant -Dsetup=false
+```
+
+The deploy process will skip cloning PyroCMS repo, requiring plugins and composer packages.
 
 ## Todo Module
 
@@ -131,7 +138,7 @@ Here's a quick list of the PyroCOM Environment properties,
 | DB_DATABASE | `pyro` | Set to `pyro` by default |
 | DB_USERNAME | `root` | Change as appropriate |
 | DB_PASSWORD | `root` | Change as appropriate |
-| DB_DRIVER | `mysql` | Set to `mysql` by default |
+| DB_CONNECTION | `mysql` | Set to `mysql` by default |
 | DB_HOST | `localhost` | Set to `localhost` by default |
 | APP_KEY | `r!a#n^d*o?m` | Auto generated |
 | APP_ENV | `local` | Change as appropriate |

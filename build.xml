@@ -13,7 +13,7 @@
 #       |     |         |     |     |     | \    \      \    `-.-.-'    /
 #       |_____|         |_____|     |_____|  \____\      '-_        _-'
 #                                                           `- - - '
-#       PyroCMS Deploy Tool v1.1
+#       PyroCMS Deploy Tool v1.2
 #
 #       This build file is desgined to automate the installation process
 #       of PyroCMS 3 apps, their addons, underlying framework (i.e. Laravel,
@@ -305,28 +305,35 @@
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <target name="composer-dependencies" depends="require-pyro" description="Require and remove composer packages">
+        
+        <if>
+          <equals arg1="${setup}" arg2="true"/>
+          <then>
 
-        <echo message="Run composer ..."/>
+            <echo message="Run composer ..."/>
 
-        <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
-            <arg line="install"/>
-        </exec>
+            <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+                <arg line="install"/>
+            </exec>
 
-        <for list="${env.COMPOSER.require}" param="package">
-            <sequential>
-                <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
-                    <arg line="require @{package}"/>
-                </exec>
-            </sequential>
-        </for>
+            <for list="${env.COMPOSER.require}" param="package">
+                <sequential>
+                    <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+                        <arg line="require @{package}"/>
+                    </exec>
+                </sequential>
+            </for>
 
-        <for list="${env.COMPOSER.remove}" param="package">
-            <sequential>
-                <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
-                    <arg line="remove @{package}"/>
-                </exec>
-            </sequential>
-        </for>
+            <for list="${env.COMPOSER.remove}" param="package">
+                <sequential>
+                    <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+                        <arg line="remove @{package}"/>
+                    </exec>
+                </sequential>
+            </for>
+
+          </then>
+        </if>
 
     </target>
 
@@ -338,49 +345,56 @@
 
     <target name="require-pyro" depends="clean" description="Clone PyroCMS and copy its files to project folder">
 
-        <echo message="Clone a fresh copy of pyrocms ... "/>
+        <if>
+          <equals arg1="${setup}" arg2="true"/>
+          <then>
 
-        <exec dir="${app.dir}" executable="${env.GIT.bin}">
-            <arg line="clone"/>
-            <arg line="-b"/>
-            <arg line="${env.PYRO.branch}"/>
-            <arg line="${env.PYRO.repo}"/>
-            <arg line="${pyro.dir}"/>
-        </exec>
+            <echo message="Clone a fresh copy of pyrocms ... "/>
 
-        <echo message="Move PyroCMS files into the project folder ..."/>
+            <exec dir="${app.dir}" executable="${env.GIT.bin}">
+                <arg line="clone"/>
+                <arg line="-b"/>
+                <arg line="${env.PYRO.branch}"/>
+                <arg line="${env.PYRO.repo}"/>
+                <arg line="${pyro.dir}"/>
+            </exec>
 
-        <!-- move root folders -->
-        <for list="${env.PYRO_FOLDERS}" param="folder">
-            <sequential>
-                <move file="${pyro.dir}/@{folder}" todir="${app.dir}" includeEmptyDirs="yes" failonerror="${failonerror}" quiet="${quiet}"/>
-            </sequential>
-        </for>
+            <echo message="Move PyroCMS files into the project folder ..."/>
 
-        <!-- move folders inside public -->
-        <for list="${env.PUBLIC_FOLDERS}" param="folder">
-            <sequential>
-                <move file="${pyro.dir}/public/@{folder}" todir="${app.dir}/public" includeEmptyDirs="yes" failonerror="${failonerror}" quiet="${quiet}"/>
-            </sequential>
-        </for>
+            <!-- move root folders -->
+            <for list="${env.PYRO_FOLDERS}" param="folder">
+                <sequential>
+                    <move file="${pyro.dir}/@{folder}" todir="${app.dir}" includeEmptyDirs="yes" failonerror="${failonerror}" quiet="${quiet}"/>
+                </sequential>
+            </for>
 
-        <!-- move root folder files -->
-        <for list="${env.ROOT_FILES}" param="file">
-            <sequential>
-                <move file="${pyro.dir}/@{file}" todir="${app.dir}" failonerror="${failonerror}" quiet="${quiet}"/>
-            </sequential>
-        </for>
+            <!-- move folders inside public -->
+            <for list="${env.PUBLIC_FOLDERS}" param="folder">
+                <sequential>
+                    <move file="${pyro.dir}/public/@{folder}" todir="${app.dir}/public" includeEmptyDirs="yes" failonerror="${failonerror}" quiet="${quiet}"/>
+                </sequential>
+            </for>
 
-        <!-- move files from public folder -->
-        <move todir="${app.dir}/public">
-            <fileset dir="${pyro.dir}/public">
-                <include name="**/*.*"/>
-            </fileset>
-        </move>
+            <!-- move root folder files -->
+            <for list="${env.ROOT_FILES}" param="file">
+                <sequential>
+                    <move file="${pyro.dir}/@{file}" todir="${app.dir}" failonerror="${failonerror}" quiet="${quiet}"/>
+                </sequential>
+            </for>
 
-        <echo message="Remove PyroCMS temporary folder ..."/>
+            <!-- move files from public folder -->
+            <move todir="${app.dir}/public">
+                <fileset dir="${pyro.dir}/public">
+                    <include name="**/*.*"/>
+                </fileset>
+            </move>
 
-        <delete dir="${pyro.dir}" failonerror="${failonerror}"/>
+            <echo message="Remove PyroCMS temporary folder ..."/>
+
+            <delete dir="${pyro.dir}" failonerror="${failonerror}"/>
+
+          </then>
+        </if>
 
     </target>
 
@@ -417,6 +431,7 @@
         <property name="pyro.dir" value="${app.dir}/pyro"/>
         <property name="laravel.dir" value="${app.dir}/laravel"/>
         <property name="env.file" value="${app.dir}/.env"/>
+        <property name="setup" value="true"/>
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         #  D A T A B A S E   P R O P E R T I E S
