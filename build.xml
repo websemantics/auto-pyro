@@ -262,8 +262,8 @@
 
         <sql driver="com.mysql.jdbc.Driver" url="${db.server.url}" userid="${db.user}"
             password="${db.pass}" classpathref="jdbc.classpath"><![CDATA[
-            INSERT INTO applications (name,reference,domain,enabled)
-            VALUES(${env.APPLICATION_NAME},${env.APPLICATION_REFERENCE},${env.APPLICATION_DOMAIN},true); ]]>
+            INSERT INTO ${db.name}.applications (name,reference,domain,enabled)
+            VALUES('${env.APPLICATION_NAME}','${env.APPLICATION_REFERENCE}','${env.APPLICATION_DOMAIN}',true); ]]>
         </sql>
 
         <echo message="- Seeding base ..."/>
