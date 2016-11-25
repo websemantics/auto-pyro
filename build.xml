@@ -257,19 +257,6 @@
                 </if>
             </sequential>
         </for>
-
-<!--
-
-$applications->create(
-    [
-        'name'      => env('APPLICATION_NAME'),
-        'reference' => env('APPLICATION_REFERENCE'),
-        'domain'    => env('APPLICATION_DOMAIN'),
-        'enabled'   => true,
-    ]
-);
-
--->
     </target>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     #
