@@ -162,10 +162,10 @@
         <echo message="- Running core migrations ..."/>
 
         <exec dir="${app.dir}" executable="${env.PHP.bin}">
-            <arg line="artisan migrate --force"/>
+            <arg line="artisan migrate --force --path=vendor/anomaly/streams-platform/migrations/core"/>
         </exec>
 
-        <echo message="- Running other migrations ..."/>
+        <echo message="- Running base migrations ..."/>
 
         <exec dir="${app.dir}" executable="${env.PHP.bin}">
             <arg line="artisan migrate --force"/>
@@ -258,6 +258,18 @@
             </sequential>
         </for>
 
+<!--
+
+$applications->create(
+    [
+        'name'      => env('APPLICATION_NAME'),
+        'reference' => env('APPLICATION_REFERENCE'),
+        'domain'    => env('APPLICATION_DOMAIN'),
+        'enabled'   => true,
+    ]
+);
+
+-->
     </target>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     #
