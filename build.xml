@@ -131,7 +131,7 @@
         <echo message="APP_KEY=${env.APP_KEY}&#10;" append="true" file="${env.file}"/>
         <echo message="ADMIN_THEME=${env.ADMIN_THEME}&#10;" append="true" file="${env.file}"/>
         <echo message="STANDARD_THEME=${env.STANDARD_THEME}&#10;" append="true" file="${env.file}"/>
-        <echo message="DB_DRIVER=${env.DB_DRIVER}&#10;" append="true" file="${env.file}"/>
+        <echo message="DB_CONNECTION=${env.DB_CONNECTION}&#10;" append="true" file="${env.file}"/>
         <echo message="DB_HOST=${env.DB_HOST}&#10;" append="true" file="${env.file}"/>
         <echo message="DB_PORT=${env.DB_PORT}&#10;" append="true" file="${env.file}"/>
         <echo message="DB_DATABASE=${env.DB_DATABASE}&#10;" append="true" file="${env.file}"/>
