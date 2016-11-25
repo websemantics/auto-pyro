@@ -124,39 +124,33 @@
         <touch file="${env.file}"/>
 
         <echo message="- Creating project .env file ..."/>
-
-        <echo message="APP_ENV=${env.APP_ENV}&#10;" append="false" file="${env.file}"/>
+        
         <echo message="APP_DEBUG=${env.APP_DEBUG}&#10;" append="true" file="${env.file}"/>
+        <echo message="APP_ENV=${env.APP_ENV}&#10;" append="true" file="${env.file}"/>
         <echo message="INSTALLED=false&#10;" append="true" file="${env.file}"/>
         <echo message="APP_KEY=${env.APP_KEY}&#10;" append="true" file="${env.file}"/>
-        <echo message="ADMIN_THEME=${env.ADMIN_THEME}&#10;" append="true" file="${env.file}"/>
-        <echo message="STANDARD_THEME=${env.STANDARD_THEME}&#10;" append="true" file="${env.file}"/>
         <echo message="DB_CONNECTION=${env.DB_CONNECTION}&#10;" append="true" file="${env.file}"/>
         <echo message="DB_HOST=${env.DB_HOST}&#10;" append="true" file="${env.file}"/>
-        <echo message="DB_PORT=${env.DB_PORT}&#10;" append="true" file="${env.file}"/>
         <echo message="DB_DATABASE=${env.DB_DATABASE}&#10;" append="true" file="${env.file}"/>
         <echo message="DB_USERNAME=${env.DB_USERNAME}&#10;" append="true" file="${env.file}"/>
         <echo message="DB_PASSWORD=${env.DB_PASSWORD}&#10;" append="true" file="${env.file}"/>
-        <echo message="APP_URL=${env.APP_URL}&#10;" append="true" file="${env.file}"/>
+        <echo message="DB_PORT=${env.DB_PORT}&#10;" append="true" file="${env.file}"/>
         <echo message="APPLICATION_NAME=${env.APPLICATION_NAME}&#10;" append="true" file="${env.file}"/>
-        <echo message="APPLICATION_REFERENCE=${env.APPLICATION_REFERENCE}&#10;" append="true" file="${env.file}"/>
         <echo message="APPLICATION_DOMAIN=${env.APPLICATION_DOMAIN}&#10;" append="true" file="${env.file}"/>
+        <echo message="APPLICATION_REFERENCE=${env.APPLICATION_REFERENCE}&#10;" append="true" file="${env.file}"/>
+        <echo message="APP_URL=${env.APP_URL}&#10;" append="true" file="${env.file}"/>
+        <echo message="APP_TIMEZONE=${env.APP_TIMEZONE}&#10;" append="true" file="${env.file}"/>
         <echo message="ADMIN_USERNAME=${env.ADMIN_USERNAME}&#10;" append="true" file="${env.file}"/>
         <echo message="ADMIN_EMAIL=${env.ADMIN_EMAIL}&#10;" append="true" file="${env.file}"/>
         <echo message="ADMIN_PASSWORD=${env.ADMIN_PASSWORD}&#10;" append="true" file="${env.file}"/>
+        <echo message="ADMIN_THEME=${env.ADMIN_THEME}&#10;" append="true" file="${env.file}"/>
+        <echo message="STANDARD_THEME=${env.STANDARD_THEME}&#10;" append="true" file="${env.file}"/>
         <echo message="DEFAULT_LOCALE=${env.DEFAULT_LOCALE}&#10;" append="true" file="${env.file}"/>
-        <echo message="APP_TIMEZONE=${env.APP_TIMEZONE}&#10;" append="true" file="${env.file}"/>
 
         <echo message="- Generating a fresh application key ..."/>
-
+        
         <exec dir="${app.dir}" executable="${env.PHP.bin}">
             <arg line="artisan key:generate"/>
-        </exec>
-
-        <echo message="- Running application migrations ..."/>
-
-        <exec dir="${app.dir}" executable="${env.PHP.bin}">
-            <arg line="artisan migrate --force --path=vendor/anomaly/streams-platform/migrations/application"/>
         </exec>
 
         <echo message="- Running core migrations ..."/>
@@ -165,31 +159,11 @@
             <arg line="artisan migrate --force --path=vendor/anomaly/streams-platform/migrations/core"/>
         </exec>
 
-        <echo message="- Running base migrations ..."/>
+        <echo message="- Running application migrations ..."/>
 
         <exec dir="${app.dir}" executable="${env.PHP.bin}">
-            <arg line="artisan migrate --force"/>
+            <arg line="artisan migrate --force --path=vendor/anomaly/streams-platform/migrations/application"/>
         </exec>
-
-        <echo message="- Installing core extensions (and, remove excluded) ..."/>
-
-        <for list="${env.CORE_EXTENSIONS}" param="extension">
-            <sequential>
-                <if>
-                    <contains string="${env.EXTENSION_EXCLUDES}" substring="@{extension}"/>
-                    <then>
-                        <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
-                            <arg line="remove anomaly/@{extension}-extension"/>
-                        </exec>
-                    </then>
-                    <else>
-                        <exec dir="${app.dir}" executable="${env.PHP.bin}">
-                            <arg line="artisan extension:install anomaly.extension.@{extension}"/>
-                        </exec>
-                    </else>
-                </if>
-            </sequential>
-        </for>
 
         <echo message="- Installing core modules (and, remove excluded) ..."/>
 
@@ -211,6 +185,26 @@
             </sequential>
         </for>
 
+        <echo message="- Installing core extensions (and, remove excluded) ..."/>
+
+        <for list="${env.CORE_EXTENSIONS}" param="extension">
+            <sequential>
+                <if>
+                    <contains string="${env.EXTENSION_EXCLUDES}" substring="@{extension}"/>
+                    <then>
+                        <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+                            <arg line="remove anomaly/@{extension}-extension"/>
+                        </exec>
+                    </then>
+                    <else>
+                        <exec dir="${app.dir}" executable="${env.PHP.bin}">
+                            <arg line="artisan extension:install anomaly.extension.@{extension}"/>
+                        </exec>
+                    </else>
+                </if>
+            </sequential>
+        </for>
+
         <for list="${env.PLUGIN_EXCLUDES}" param="plugin">
             <sequential>
                 <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
@@ -219,8 +213,15 @@
             </sequential>
         </for>
 
-        <!-- Set INSTALLED = true in .env file so we can seed -->
+        <echo message="- Change to installed state ..."/>
+
         <replace file="${env.file}" token="INSTALLED=false" value="INSTALLED=true"/>
+
+        <echo message="- Running base migrations ..."/>
+
+        <exec dir="${app.dir}" executable="${env.PHP.bin}">
+            <arg line="artisan migrate --force"/>
+        </exec>
 
         <echo message="- Seeding core modules ..."/>
 
@@ -269,7 +270,7 @@
         <echo message="- Seeding base ..."/>
 
         <exec dir="${app.dir}" executable="${env.PHP.bin}">
-            <arg line="artisan db:seed --force"/>
+            <arg line="artisan db:seed"/>
         </exec>
 
     </target>
@@ -442,15 +443,15 @@
         <property name="db.user" value="${env.DB_USERNAME}"/>
         <property name="db.pass" value="${env.DB_PASSWORD}"/>
         <property name="db.name" value="${env.DB_DATABASE}"/>
-			  <property name="db.driver" value="com.mysql.jdbc.Driver"/>
-			  <property name="db.dropFirst" value="true"/>
+        <property name="db.driver" value="com.mysql.jdbc.Driver"/>
+        <property name="db.dropFirst" value="true"/>
 
         <!-- Set jdbc folder path -->
-  			<path id="jdbc.classpath">
-  			  <fileset dir="${app.dir}/lib">
-  			    <include name="mysql-connector-java-5.1.23-bin.jar"/>
-  			  </fileset>
-  			</path>
+        <path id="jdbc.classpath">
+            <fileset dir="${app.dir}/lib">
+            <include name="mysql-connector-java-5.1.23-bin.jar"/>
+            </fileset>
+        </path>
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         #  D O W N L O A D   A N T   D E P E N D E N C I E S
