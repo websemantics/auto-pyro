@@ -257,6 +257,21 @@
                 </if>
             </sequential>
         </for>
+
+        <echo message="- Create application instance ..."/>
+
+        <sql driver="com.mysql.jdbc.Driver" url="${db.server.url}" userid="${db.user}"
+            password="${db.pass}" classpathref="jdbc.classpath"><![CDATA[
+            INSERT INTO applications (name,reference,domain,enabled)
+            VALUES(${env.APPLICATION_NAME},${env.APPLICATION_REFERENCE},${env.APPLICATION_DOMAIN},true); ]]>
+        </sql>
+
+        <echo message="- Seeding base ..."/>
+
+        <exec dir="${app.dir}" executable="${env.PHP.bin}">
+            <arg line="artisan db:seed --force"/>
+        </exec>
+
     </target>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     #
