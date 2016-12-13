@@ -24,6 +24,7 @@
 /tests
 /addons/default/anomaly
 /addons/default/websemantics/entity_builder-extension
+/addons/default/websemantics/pyrocms-theme
 /package.json
 /composer.json
 .env
