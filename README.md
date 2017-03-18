@@ -14,7 +14,7 @@
 
                                             )))    
                                            (o o)    
-    ----  PyroCMS Deploy Tool v1.2 --- ooO--(_)--Ooo ----
+    ----  PyroCMS Deploy Tool v1.3 --- ooO--(_)--Ooo ----
 ```
 
 > This is a [PyroCMS 3](https://www.pyrocms.com/) deploy tool with customization, install automation, better version control setup and other nice-to-have features.

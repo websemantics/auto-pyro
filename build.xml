@@ -13,7 +13,7 @@
 #       |     |         |     |     |     | \    \      \    `-.-.-'    /
 #       |_____|         |_____|     |_____|  \____\      '-_        _-'
 #                                                           `- - - '
-#       PyroCMS Deploy Tool v1.2
+#       PyroCMS Deploy Tool v1.3
 #
 #       This build file is desgined to automate the installation process
 #       of PyroCMS 3 apps, their addons, underlying framework (i.e. Laravel,
