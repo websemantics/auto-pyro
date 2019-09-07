@@ -79,7 +79,7 @@
 
     <target name="run-artisan-commands" depends="require-install-addons" description="Run artisan commands">
 
-        <echo message="Run artisan commands ..."/>
+        <!-- <echo message="Run artisan commands ..."/>
 
         <for list="${env.ARTISAN}" param="command" delimiter=";">
             <sequential>
@@ -87,7 +87,7 @@
                   <arg line="artisan @{command}"/>
               </exec>
             </sequential>
-        </for>
+        </for> -->
 
     </target>
 
@@ -100,13 +100,13 @@
 
     <target name="require-install-addons" depends="install-pyro" description="Requires and installs project addons and all the front-end, css, npm, grunt libraries">
 
-        <echo message="Requiring and installing project addons ..."/>
+        <!-- <echo message="Requiring and installing project addons ..."/>
 
         <for list="${env.APP_ADDONS}" param="package">
             <sequential>
                 <addon package="@{package}"/>
             </sequential>
-        </for>
+        </for> -->
 
     </target>
 
@@ -124,7 +124,7 @@
         <touch file="${env.file}"/>
 
         <echo message="- Creating project .env file ..."/>
-        
+
         <echo message="APP_DEBUG=${env.APP_DEBUG}&#10;" append="true" file="${env.file}"/>
         <echo message="APP_ENV=${env.APP_ENV}&#10;" append="true" file="${env.file}"/>
         <echo message="INSTALLED=false&#10;" append="true" file="${env.file}"/>
@@ -148,7 +148,7 @@
         <echo message="DEFAULT_LOCALE=${env.DEFAULT_LOCALE}&#10;" append="true" file="${env.file}"/>
 
         <echo message="- Generating a fresh application key ..."/>
-        
+
         <exec dir="${app.dir}" executable="${env.PHP.bin}">
             <arg line="artisan key:generate"/>
         </exec>
@@ -178,7 +178,7 @@
                     </then>
                     <else>
                         <exec dir="${app.dir}" executable="${env.PHP.bin}">
-                            <arg line="artisan module:install anomaly.module.@{module}"/>
+                            <arg line="artisan addon:install --app ${env.APPLICATION_REFERENCE} anomaly.module.@{module}"/>
                         </exec>
                     </else>
                 </if>
@@ -198,7 +198,7 @@
                     </then>
                     <else>
                         <exec dir="${app.dir}" executable="${env.PHP.bin}">
-                            <arg line="artisan extension:install anomaly.extension.@{extension}"/>
+                            <arg line="artisan addon:install --app ${env.APPLICATION_REFERENCE} anomaly.extension.@{extension}"/>
                         </exec>
                     </else>
                 </if>
@@ -214,17 +214,14 @@
         </for>
 
         <echo message="- Change to installed state ..."/>
-
         <replace file="${env.file}" token="INSTALLED=false" value="INSTALLED=true"/>
 
         <echo message="- Running base migrations ..."/>
-
         <exec dir="${app.dir}" executable="${env.PHP.bin}">
             <arg line="artisan migrate --force"/>
         </exec>
 
         <echo message="- Seeding core modules ..."/>
-
         <for list="${env.CORE_MODULES}" param="module">
             <sequential>
                 <if>
@@ -261,7 +258,7 @@
 
         <echo message="- Create application instance ..."/>
 
-        <sql driver="com.mysql.jdbc.Driver" url="${db.server.url}" userid="${db.user}"
+        <sql driver="com.mysql.cj.jdbc.Driver" url="${db.server.url}" userid="${db.user}"
             password="${db.pass}" classpathref="jdbc.classpath"><![CDATA[
             INSERT INTO ${db.name}.applications (name,reference,domain,enabled)
             VALUES('${env.APPLICATION_NAME}','${env.APPLICATION_REFERENCE}','${env.APPLICATION_DOMAIN}',true); ]]>
@@ -282,19 +279,19 @@
 
     <target name="create-database" depends="composer-dependencies" description="Create database">
 
-      <echo message="- Creating ${db.name} database ..."/>
+      <echo message="- Creating ${db.name} database ... ${db.server.url} ${app.dir}/lib"/>
 
       <if>
         <equals arg1="${env.DB_DROP}" arg2="true"/>
           <then>
-            <sql driver="com.mysql.jdbc.Driver" url="${db.server.url}" userid="${db.user}"
+            <sql driver="com.mysql.cj.jdbc.Driver" url="${db.server.url}" userid="${db.user}"
               password="${db.pass}" classpathref="jdbc.classpath"><![CDATA[
               DROP DATABASE IF EXISTS ${db.name}; ]]>
             </sql>
           </then>
       </if>
 
-      <sql driver="com.mysql.jdbc.Driver" url="${db.server.url}" userid="${db.user}"
+      <sql driver="com.mysql.cj.jdbc.Driver" url="${db.server.url}" userid="${db.user}"
         password="${db.pass}" classpathref="jdbc.classpath"><![CDATA[
         CREATE DATABASE IF NOT EXISTS ${db.name}; ]]>
       </sql>
@@ -308,16 +305,16 @@
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <target name="composer-dependencies" depends="require-pyro" description="Require and remove composer packages">
-        
+
         <if>
           <equals arg1="${setup}" arg2="true"/>
           <then>
 
             <echo message="Run composer ..."/>
 
-            <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+            <!-- <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
                 <arg line="install"/>
-            </exec>
+            </exec> -->
 
             <for list="${env.COMPOSER.require}" param="package">
                 <sequential>
@@ -352,7 +349,7 @@
           <equals arg1="${setup}" arg2="true"/>
           <then>
 
-            <echo message="Clone a fresh copy of pyrocms ... "/>
+            <!-- <echo message="Clone a fresh copy of pyrocms ... "/>
 
             <exec dir="${app.dir}" executable="${env.GIT.bin}">
                 <arg line="clone"/>
@@ -360,7 +357,7 @@
                 <arg line="${env.PYRO.branch}"/>
                 <arg line="${env.PYRO.repo}"/>
                 <arg line="${pyro.dir}"/>
-            </exec>
+            </exec> -->
 
             <echo message="Move PyroCMS files into the project folder ..."/>
 
@@ -410,7 +407,7 @@
     <target name="clean" depends="init" description="Delete temp folders and the project .env file">
 
         <delete file="${env.file}" failonerror="${failonerror}"/>
-        <delete dir="${pyro.dir}" failonerror="${failonerror}"/>
+        <!-- <delete dir="${pyro.dir}" failonerror="${failonerror}"/> -->
         <delete dir="${laravel.dir}" failonerror="${failonerror}"/>
 
     </target>
@@ -445,13 +442,13 @@
         <property name="db.user" value="${env.DB_USERNAME}"/>
         <property name="db.pass" value="${env.DB_PASSWORD}"/>
         <property name="db.name" value="${env.DB_DATABASE}"/>
-        <property name="db.driver" value="com.mysql.jdbc.Driver"/>
+        <property name="db.driver" value="com.mysql.cj.jdbc.Driver"/>
         <property name="db.dropFirst" value="true"/>
 
         <!-- Set jdbc folder path -->
         <path id="jdbc.classpath">
             <fileset dir="${app.dir}/lib">
-            <include name="mysql-connector-java-5.1.23-bin.jar"/>
+                <include name="mysql-connector-java-8.0.17.jar"/>
             </fileset>
         </path>
 
@@ -462,12 +459,10 @@
         <mkdir dir="${app.dir}/lib"/>
 
         <!-- Ant-contrib -->
-        <get src="http://www.java2s.com/Code/JarDownload/ant-contrib/ant-contrib-1.0b3.jar.zip" dest="${app.dir}/lib/ant-contrib-1.0b3.jar.zip" usetimestamp="true" skipexisting="true" ignoreerrors="${ignoreerrors}" quiet="${quiet}"/>
-        <unzip src="${app.dir}/lib/ant-contrib-1.0b3.jar.zip" dest="${app.dir}/lib"/>
+        <get src="https://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" dest="${app.dir}/lib/ant-contrib-1.0b3.jar" usetimestamp="true" skipexisting="true" ignoreerrors="${ignoreerrors}" quiet="${quiet}"/>
 
         <!-- MySql-connector -->
-        <get src="http://www.java2s.com/Code/JarDownload/mysql/mysql-connector-java-5.1.23-bin.jar.zip" dest="${app.dir}/lib/mysql-connector-java-5.1.23-bin.jar.zip" usetimestamp="true" skipexisting="true" ignoreerrors="${ignoreerrors}" quiet="${quiet}"/>
-        <unzip src="${app.dir}/lib/mysql-connector-java-5.1.23-bin.jar.zip" dest="${app.dir}/lib"/>
+        <get src="https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.17/mysql-connector-java-8.0.17.jar" dest="${app.dir}/lib/mysql-connector-java-8.0.17.jar" usetimestamp="true" skipexisting="true" ignoreerrors="${ignoreerrors}" quiet="${quiet}"/>
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         #  T A S K   D E F I N I T I O N S

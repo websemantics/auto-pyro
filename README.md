@@ -12,8 +12,8 @@
       |_____|         |_____|     |_____|  \____\      '-_        _-'
                                                           `------'
 
-                                            )))    
-                                           (o o)    
+                                            )))
+                                           (o o)
     ----  PyroCMS Deploy Tool v1.3 --- ooO--(_)--Ooo ----
 ```
 
@@ -35,7 +35,7 @@ And, the following steps sum-up what was achieved in the video,
 brew install ant
 ```
 
-Apache Ant is an awesome build tool and despite its seemingly dated xml format, it can achieve great feats. [Tutsplus](https://tutsplus.com/) has a great article called, [Automate your Projects with Apache Ant](https://code.tutsplus.com/tutorials/automate-your-projects-with-apache-ant--net-18595) to introduce the tool to new comers. 
+Apache Ant is an awesome build tool and despite its seemingly dated xml format, it can achieve great feats. [Tutsplus](https://tutsplus.com/) has a great article called, [Automate your Projects with Apache Ant](https://code.tutsplus.com/tutorials/automate-your-projects-with-apache-ant--net-18595) to introduce the tool to new comers.
 
 2- Clone this repository into `my-app`,
 
@@ -54,7 +54,7 @@ cd my-app
 ant
 ```
 
-Set back until the deploy process is complete. Browse to the project to view, for example, http://my-app.dev.
+Set back until the deploy process is complete. Browse to the project to view, for example, http://my-app.test.
 
 A setup switch `setup` is available for you to only install Pyro.
 
@@ -93,7 +93,7 @@ Here's a list of why this project can be of help when working with PyroCMS 3, ma
 
 - To gain the ability to have project own `README.md`, `CONTRIBUTING.md` and `LICENSE.md` files instead of the framework defaults.
 
-- Oftentimes we need to install third-party modules, themes and other addons from Github but end-up installing them manually and track them in the project Github repository.  
+- Oftentimes we need to install third-party modules, themes and other addons from Github but end-up installing them manually and track them in the project Github repository.
 
 - Find it somewhat inconvenient to install dependencies for third-party/our own addons  ([Bower](https://bower.io/), [NPM](http://npmjs.com/), [Composer](https://getcomposer.org/), etc) or run build tasks (i.e [Grunt](http://gruntjs.com/), [Gulp](http://gulpjs.com/)) after every install.
 
@@ -131,7 +131,7 @@ Here's a quick list of the PyroCOM Environment properties,
 | APPLICATION_NAME | `default` | Set to `Default` by default |
 | APPLICATION_DOMAIN |   `localhost`    |  Change as appropriate |
 | APPLICATION_REFERENCE |   `default`   | Set to `default` by default  |
-| APP_URL |   `default.dev`   | Set to `{APPLICATION_NAME}.dev` by default |
+| APP_URL |   `default.test`   | Set to `{APPLICATION_NAME}.test` by default |
 | ADMIN_USERNAME | `admin` | Set to `admin` by default |
 | ADMIN_EMAIL | `admin@admin.com` | Set to `admin@admin.com` by default |
 | ADMIN_PASSWORD | `secret` | Set to `secret` by default |
@@ -205,6 +205,12 @@ The remaining tasks are experiential and still work in progress,
 
 ## Changelog
 
+1.3.0
+  date: 2019-09-07
+  changes:
+  - Upgraded to PyroCMS 3.7
+  - Switched to [Maven Repository](https://repo1.maven.org/maven2/) for Java jar files
+  - Upgraded Java MySQL Connector to v8.0.17
 1.0.0
   date: 2016-09-18
   changes:
@@ -232,6 +238,7 @@ We are more than happy to accept external contributions to the project in the fo
 
 - [PyroCMS](https://www.pyrocms.com/)
 - [Pyro Builder](https://github.com/websemantics/builder-extension)
+- [Maven Repository](https://repo1.maven.org/maven2/)
 
 ## License
 
