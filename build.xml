@@ -13,7 +13,7 @@
 #       |     |         |     |     |     | \    \      \    `-.-.-'    /
 #       |_____|         |_____|     |_____|  \____\      '-_        _-'
 #                                                           `- - - '
-#       PyroCMS Deploy Tool v1.3
+#       PyroCMS Deploy Tool v1.5
 #
 #       This build file is desgined to automate the installation process
 #       of PyroCMS 3 apps, their addons, underlying framework (i.e. Laravel,
@@ -120,9 +120,7 @@
     <target name="install-pyro" depends="create-database" description="Installs PyroCMS by running migrations, installing/seeding core modules/addons and creating the project .env file">
 
         <echo message="Starting PyroCMS installation ... "/>
-
         <touch file="${env.file}"/>
-
         <echo message="- Creating project .env file ..."/>
 
         <echo message="APP_DEBUG=${env.APP_DEBUG}&#10;" append="true" file="${env.file}"/>
@@ -312,9 +310,9 @@
 
             <echo message="Run composer ..."/>
 
-            <!-- <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
+            <exec dir="${app.dir}" executable="${env.COMPOSER.bin}">
                 <arg line="install"/>
-            </exec> -->
+            </exec>
 
             <for list="${env.COMPOSER.require}" param="package">
                 <sequential>
@@ -349,7 +347,7 @@
           <equals arg1="${setup}" arg2="true"/>
           <then>
 
-            <!-- <echo message="Clone a fresh copy of pyrocms ... "/>
+            <echo message="Clone a fresh copy of pyrocms ... "/>
 
             <exec dir="${app.dir}" executable="${env.GIT.bin}">
                 <arg line="clone"/>
@@ -357,7 +355,7 @@
                 <arg line="${env.PYRO.branch}"/>
                 <arg line="${env.PYRO.repo}"/>
                 <arg line="${pyro.dir}"/>
-            </exec> -->
+            </exec>
 
             <echo message="Move PyroCMS files into the project folder ..."/>
 
@@ -407,7 +405,7 @@
     <target name="clean" depends="init" description="Delete temp folders and the project .env file">
 
         <delete file="${env.file}" failonerror="${failonerror}"/>
-        <!-- <delete dir="${pyro.dir}" failonerror="${failonerror}"/> -->
+        <delete dir="${pyro.dir}" failonerror="${failonerror}"/>
         <delete dir="${laravel.dir}" failonerror="${failonerror}"/>
 
     </target>
